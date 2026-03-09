@@ -1,4 +1,4 @@
-# Haven 🛡️
+# Haven 🕊️
 
 > ⚠️ **EDUCATIONAL PROJECT - NOT FOR PRODUCTION USE**
 > This is a student capstone project demonstrating full-stack development skills.
