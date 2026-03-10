@@ -9,12 +9,9 @@ export default async function handler(request, response) {
   if (request.method === "GET") {
     try {
       const incidents = await Incident.find();
-      return response.status(200).json({ success: true, data: incidents });
+      return response.status(200).json(incidents);
     } catch (error) {
-      return response.status(500).json({
-        success: false,
-        message: error.message,
-      });
+      return response.status(500).json({ message: error.message });
     }
   } else {
     return response.status(405).json({ message: "Method not allowed" });
