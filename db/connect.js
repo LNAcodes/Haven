@@ -18,12 +18,12 @@ if (!MONGODB_URI) {
 let cached = global.mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = global.mongoose = { connection: null, promise: null };
 }
 
 async function dbConnect() {
-  if (cached.conn) {
-    return cached.conn;
+  if (cached.connection) {
+    return cached.connection;
   }
 
   if (!cached.promise) {
@@ -37,13 +37,13 @@ async function dbConnect() {
   }
 
   try {
-    cached.conn = await cached.promise;
-  } catch (e) {
+    cached.connection = await cached.promise;
+  } catch (error) {
     cached.promise = null;
-    throw e;
+    throw error;
   }
 
-  return cached.conn;
+  return cached.connection;
 }
 
 export default dbConnect;
