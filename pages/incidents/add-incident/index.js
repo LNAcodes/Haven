@@ -2,9 +2,11 @@
 
 import IncidentForm from "@/components/IncidentForm/IncidentForm";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 
 export default function AddIncident() {
   const { mutate, data: incidents } = useSWR("/api/incidents");
+  const router = useRouter();
 
   async function handleAddIncident(incidentData) {
     const newIncident = { ...incidentData, _id: crypto.randomUUID() };
@@ -20,6 +22,7 @@ export default function AddIncident() {
       throw new Error("Could not save new incident.");
     }
     await mutate();
+    router.push("/");
   }
   return (
     <>
@@ -27,6 +30,7 @@ export default function AddIncident() {
         submitLabel="Submit"
         onSubmit={handleAddIncident}
         cancelLabel="Cancel"
+        onCancel={() => router.push("/")}
         resetOnSuccess
       />
     </>

@@ -28,12 +28,16 @@ export default createGlobalStyle`
     padding: 0;
   }
 
+  html, body {
+  height: 100%;
+  }
+
   body {
     font-family: var(--font-family);
     font-weight: var(--font-weight-regular);
     background-color: var(--color-background);
     color: var(--color-text);
     line-height: 1.6;
-    min-height: 100vh;
+    min-height: 100dvh;
   }
 `;

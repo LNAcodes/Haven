@@ -17,9 +17,11 @@ export default function IncidentForm({
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setIsSubmitting(true);
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
+
     try {
       await onSubmit(data);
       setShowSuccess(true);
@@ -33,18 +35,23 @@ export default function IncidentForm({
       setIsSubmitting(false);
     }
   }
+
   return (
     <Form data-js="incidentForm" onSubmit={handleSubmit}>
       {showSuccess ? (
         <SuccessMessage role="status" aria-live="polite">
-          Incident successfully added.
+          Incident documented successfully!
         </SuccessMessage>
       ) : null}
+
       {submitError ? (
         <ErrorMessage role="alert">{submitError}</ErrorMessage>
       ) : null}
+
       <Field>
-        <Label htmlFor="date">Date</Label>
+        <Label htmlFor="date">
+          Date <Required>*</Required>
+        </Label>
         <Input
           name="date"
           id="date"
@@ -55,7 +62,9 @@ export default function IncidentForm({
       </Field>
 
       <Field>
-        <Label htmlFor="time">Time</Label>
+        <Label htmlFor="time">
+          Time <Required>*</Required>
+        </Label>
         <Input
           name="time"
           id="time"
@@ -66,18 +75,23 @@ export default function IncidentForm({
       </Field>
 
       <Field>
-        <Label htmlFor="location">Location</Label>
+        <Label htmlFor="location">
+          Location <Required>*</Required>
+        </Label>
         <Input
           name="location"
           id="location"
           required
           type="text"
+          placeholder="e.g. classroom, schoolyard, bus"
           defaultValue={initialData.location ?? ""}
         />
       </Field>
 
       <Field>
-        <Label htmlFor="involvedPersons">Involved Persons</Label>
+        <Label htmlFor="involvedPersons">
+          Involved Persons <Required>*</Required>
+        </Label>
         <Input
           name="involvedPersons"
           id="involvedPersons"
@@ -107,7 +121,9 @@ export default function IncidentForm({
       </Field>
 
       <Field>
-        <Label htmlFor="category">Category</Label>
+        <Label htmlFor="category">
+          Category <Required>*</Required>
+        </Label>
         <Select
           name="category"
           id="category"
@@ -126,7 +142,9 @@ export default function IncidentForm({
       </Field>
 
       <Field>
-        <Label htmlFor="severity">Severity</Label>
+        <Label htmlFor="severity">
+          Severity <Required>*</Required>
+        </Label>
         <Select
           name="severity"
           id="severity"
@@ -144,12 +162,15 @@ export default function IncidentForm({
       </Field>
 
       <Field>
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">
+          Description <Required>*</Required>
+        </Label>
         <Textarea
           name="description"
           id="description"
           required
           minLength={10}
+          placeholder="Describe what happened (min. 10 characters)"
           defaultValue={initialData.description ?? ""}
         />
       </Field>
@@ -187,14 +208,14 @@ export default function IncidentForm({
       </Button>
 
       {onCancel && (
-        <Button
+        <CancelButton
           type="button"
           onClick={onCancel}
           disabled={isSubmitting}
           aria-label="Cancel"
         >
           {cancelLabel}
-        </Button>
+        </CancelButton>
       )}
     </Form>
   );
@@ -203,7 +224,10 @@ export default function IncidentForm({
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
+  gap: 16px;
+  padding: 16px;
+  max-widt: 600px;
+  margin: 0 auto;
 `;
 
 const Field = styled.div`
@@ -213,40 +237,92 @@ const Field = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: 1rem;
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+`;
+
+const Required = styled.span`
+  color: var(--color-error);
 `;
 
 const Input = styled.input`
   font-family: var(--font-family);
   font-size: 1rem;
-  padding: 8px;
+  padding: 8px 12px;
+  min-height: 48px;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  width: 100%;
+  box-sizing: border-box;
+  &:user-invalid {
+    border-color: var(--color-error);
+  }
 `;
 
 const Textarea = styled.textarea`
+  font-family: var(--font-family);
   font-size: 1rem;
-  padding: 8px;
+  padding: 8px 12px;
+  min-height: 80px;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  &:user-invalid {
+    border-color: var(--color-error);
+  }
 `;
 
 const Select = styled.select`
+  font-family: var(--font-family);
   font-size: 1rem;
-  padding: 8px;
+  padding: 8px 12px;
+  min-height: 48px;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  width: 100%;
+  box-sizing: border-box;
+  &:user-invalid {
+    border-color: var(--color-error);
+  }
 `;
 
 const Button = styled.button`
+  font-family: var(--font-family);
   font-size: 1rem;
-  padding: 10px;
+  font-weight: var(--font-weight-medium);
+  min-height: 48px;
+  width: 100%;
   background-color: var(--color-primary);
+  color: var(--color-text);
   border: none;
+  border-radius: 4px;
   cursor: pointer;
 `;
 
+const CancelButton = styled(Button)`
+  background-color: transparent;
+  border: 1px solid var(--color-text);
+`;
+
 const Hint = styled.p`
+  font-family: var(--font-family);
   font-size: 0.8rem;
   color: var(--color-accent);
   margin: 0;
 `;
 
 const SuccessMessage = styled.p`
+  font-family: var(--font-family);
   color: var(--color-success);
   background-color: var(--color-success-bg);
   padding: 8px 12px;
@@ -254,6 +330,7 @@ const SuccessMessage = styled.p`
 `;
 
 const ErrorMessage = styled.p`
+  font-family: var(--font-family);
   color: var(--color-error);
   background-color: var(--color-error-bg);
   padding: 8px 12px;
