@@ -10,9 +10,11 @@ export default async function handler(request, response) {
     case "GET": {
       try {
         const incidents = await Incident.find();
-        return response.status(200).json(incidents);
+        response.status(200).json(incidents);
+        break;
       } catch (error) {
-        return response.status(500).json({ message: error.message });
+        response.status(500).json({ message: error.message });
+        break;
       }
     }
     case "POST": {
@@ -26,6 +28,9 @@ export default async function handler(request, response) {
           category,
           severity,
           description,
+          impact,
+          reportedTo,
+          followUp,
         } = request.body;
 
         const involvedPersonsArray = involvedPersons
@@ -45,17 +50,24 @@ export default async function handler(request, response) {
           category,
           severity,
           description,
+          impact,
+          reportedTo,
+          followUp,
         });
 
-        return response.status(201).json(incident);
+        response.status(201).json(incident);
+        break;
       } catch (error) {
         if (error.name === "ValidationError") {
-          return response.status(400).json({ message: error.message });
+          response.status(400).json({ message: error.message });
+          break;
         }
-        return response.status(500).json({ message: error.message });
+        response.status(500).json({ message: error.message });
+        break;
       }
     }
     default:
-      return response.status(405).json({ message: "Method not allowed" });
+      response.status(405).json({ message: "Method not allowed" });
+      break;
   }
 }

@@ -8,6 +8,10 @@ export default createGlobalStyle`
     --color-primary: #7BBFDF;
     --color-accent: #7D4E8C;
     --color-text: #2D3748;
+    --color-success: #2d6a4f;
+    --color-success-bg: #d8f3dc;
+    --color-error: #92400e;
+    --color-error-bg: #fef3c7;
     --font-family: 'Inter', system-ui, sans-serif;
     --font-weight-regular: 400;
     --font-weight-medium: 500;
