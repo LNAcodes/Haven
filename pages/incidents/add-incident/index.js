@@ -18,7 +18,7 @@ export default function AddIncident() {
     });
 
     if (!result.ok) {
-      const errorData = await result.json();
+      await result.json();
       throw new Error("Could not save new incident.");
     }
     await mutate();

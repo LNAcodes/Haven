@@ -1,15 +1,15 @@
-// pags/index.js
+// pages/index.js
 import Link from "next/link";
 import styled from "styled-components";
 
 export default function HomePage() {
   return (
-    <main>
+    <Main>
       <Title>Welcome to Haven</Title>
-      <StyledLink href="/incidents/add-incident">
-        <Button>Add New Incident</Button>
-      </StyledLink>
-    </main>
+      <AddIncidentLink href="/incidents/add-incident">
+        Add New Incident
+      </AddIncidentLink>
+    </Main>
   );
 }
 
@@ -30,21 +30,17 @@ const Title = styled.h1`
   align-self: end;
 `;
 
-const StyledLink = styled(Link)`
-  display: flex;
-  justify-content: center;
-  text-decoration: none;
-`;
-
-const Button = styled.button`
+const AddIncidentLink = styled(Link)`
   font-family: var(--font-family);
   font-size: 0.8rem;
-  height: 36px;
-  padding: 0 14px;
+  font-weight: var(--font-weight-medium);
+  min-height: 44px;
+  padding: 0 16px;
   background-color: var(--color-primary);
   color: var(--color-text);
-  border: none;
   border-radius: 4px;
-  cursor: pointer;
-  align-self: start;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

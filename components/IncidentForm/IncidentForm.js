@@ -226,7 +226,7 @@ const Form = styled.form`
   flex-direction: column;
   gap: 16px;
   padding: 16px;
-  max-widt: 600px;
+  max-width: 600px;
   margin: 0 auto;
 `;
 
@@ -275,7 +275,7 @@ const Textarea = styled.textarea`
   width: 100%;
   box-sizing: border-box;
   resize: vertical;
-  &:user-invalid {
+  &:invalid {
     border-color: var(--color-error);
   }
 `;
