@@ -12,6 +12,10 @@ export default createGlobalStyle`
     --color-success-bg: #d8f3dc;
     --color-error: #92400e;
     --color-error-bg: #fef3c7;
+    --color-severity-low: #2d6a4f;
+    --color-severity-medium: #b45309;
+    --color-severity-high: #9a3412;
+    --color-severity-critical: #6d326d;
     --font-family: 'Inter', system-ui, sans-serif;
     --font-weight-regular: 400;
     --font-weight-medium: 500;
