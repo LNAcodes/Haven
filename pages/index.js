@@ -7,21 +7,19 @@ export default function HomePage() {
   return (
     <Main>
       <Title>Welcome to Haven</Title>
-      <IncidentList />
       <AddIncidentLink href="/incidents/add-incident">
         Add New Incident
       </AddIncidentLink>
+      <IncidentList />
     </Main>
   );
 }
 
 const Main = styled.main`
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  align-items: center;
-  justify-items: center;
-  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   padding: 24px;
+  gap: 16px;
 `;
 
 const Title = styled.h1`
@@ -29,7 +27,6 @@ const Title = styled.h1`
   font-size: 1.2rem;
   color: var(--color-text);
   text-align: center;
-  align-self: end;
 `;
 
 const AddIncidentLink = styled(Link)`
