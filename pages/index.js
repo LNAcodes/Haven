@@ -1,11 +1,13 @@
 // pages/index.js
 import Link from "next/link";
 import styled from "styled-components";
+import IncidentList from "@/components/IncidentList/IncidentList";
 
 export default function HomePage() {
   return (
     <Main>
       <Title>Welcome to Haven</Title>
+      <IncidentList />
       <AddIncidentLink href="/incidents/add-incident">
         Add New Incident
       </AddIncidentLink>
