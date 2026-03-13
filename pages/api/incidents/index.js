@@ -9,7 +9,7 @@ export default async function handler(request, response) {
   switch (request.method) {
     case "GET": {
       try {
-        const incidents = await Incident.find();
+        const incidents = await Incident.find().sort({ date: -1 });
         response.status(200).json(incidents);
         break;
       } catch (error) {
