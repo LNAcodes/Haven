@@ -13,21 +13,20 @@ export default async function handler(request, response) {
     if (!ObjectId.isValid(id)) {
       response.status(400).json({ message: "Invalid ID format" });
       return;
+    }
+    try {
+      const incident = await Incident.findOne({ _id: id });
 
-      try {
-        const incident = await Incident.findOne({ _id: id });
-
-        if (!incident) {
-          response.status(404).json({ message: "Incident not found" });
-          return;
-        }
-
-        response.status(200).json(incident);
-        return;
-      } catch (error) {
-        response.status(500).json({ message: error.message });
+      if (!incident) {
+        response.status(404).json({ message: "Incident not found" });
         return;
       }
+
+      response.status(200).json(incident);
+      return;
+    } catch (error) {
+      response.status(500).json({ message: error.message });
+      return;
     }
   }
 }
