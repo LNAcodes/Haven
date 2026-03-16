@@ -10,18 +10,24 @@ export default async function handler(request, response) {
   const { id } = request.query;
 
   if (request.method === "GET") {
-    try {
-      const incident = await Incident.findOne({ _id: id });
+    if (!ObjectId.isValid(id)) {
+      response.status(400).json({ message: "Invalid ID format" });
+      return;
 
-      if (!incident) {
-        response.status(404).json({ message: "Incident not found" });
+      try {
+        const incident = await Incident.findOne({ _id: id });
+
+        if (!incident) {
+          response.status(404).json({ message: "Incident not found" });
+          return;
+        }
+
+        response.status(200).json(incident);
+        return;
+      } catch (error) {
+        response.status(500).json({ message: error.message });
         return;
       }
-      response.status(200).json(incidentCard);
-      return;
-    } catch (error) {
-      response.status(500).json({ message: error.message });
-      return;
     }
   }
 }
