@@ -21,7 +21,7 @@ const Card = styled.article`
   display: flex;
   gap: 8px;
   align-items: center;
-  border-left: 4px solid
+  border-left: 8px solid
     ${({ $severity }) => {
       if ($severity === "low") return "var(--color-severity-low)";
       if ($severity === "medium") return "var(--color-severity-medium)";
