@@ -72,7 +72,7 @@ const AddIncidentLink = styled(Link)`
   min-height: 44px;
   padding: 0 16px;
   background-color: var(--color-primary);
-  color: var(--color-text);
+  color: var(--color-button-text);
   border-radius: 4px;
   text-decoration: none;
   display: flex;

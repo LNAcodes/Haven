@@ -14,7 +14,7 @@ const fetcher = async (url) => {
     throw error;
   }
 
-  return res.json();
+  return fetchResponse.json();
 };
 
 export default function App({ Component, pageProps }) {

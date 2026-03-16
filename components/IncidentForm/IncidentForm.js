@@ -37,197 +37,203 @@ export default function IncidentForm({
   }
 
   return (
-    <Form data-js="incidentForm" onSubmit={handleSubmit}>
-      {showSuccess ? (
-        <SuccessMessage role="status" aria-live="polite">
-          Incident documented successfully!
-        </SuccessMessage>
-      ) : null}
+    <PageContainer>
+      <Form data-js="incidentForm" onSubmit={handleSubmit}>
+        {showSuccess ? (
+          <SuccessMessage role="status" aria-live="polite">
+            Incident documented successfully!
+          </SuccessMessage>
+        ) : null}
 
-      {submitError ? (
-        <ErrorMessage role="alert">{submitError}</ErrorMessage>
-      ) : null}
+        {submitError ? (
+          <ErrorMessage role="alert">{submitError}</ErrorMessage>
+        ) : null}
 
-      <Field>
-        <Label htmlFor="date">
-          Date <Required>*</Required>
-        </Label>
-        <Input
-          name="date"
-          id="date"
-          required
-          type="date"
-          defaultValue={initialData.date ?? ""}
-        />
-      </Field>
+        <Field>
+          <Label htmlFor="date">
+            Date <Required>*</Required>
+          </Label>
+          <Input
+            name="date"
+            id="date"
+            required
+            type="date"
+            defaultValue={initialData.date ?? ""}
+          />
+        </Field>
 
-      <Field>
-        <Label htmlFor="time">
-          Time <Required>*</Required>
-        </Label>
-        <Input
-          name="time"
-          id="time"
-          required
-          type="time"
-          defaultValue={initialData.time ?? ""}
-        />
-      </Field>
+        <Field>
+          <Label htmlFor="time">
+            Time <Required>*</Required>
+          </Label>
+          <Input
+            name="time"
+            id="time"
+            required
+            type="time"
+            defaultValue={initialData.time ?? ""}
+          />
+        </Field>
 
-      <Field>
-        <Label htmlFor="location">
-          Location <Required>*</Required>
-        </Label>
-        <Input
-          name="location"
-          id="location"
-          required
-          type="text"
-          placeholder="e.g. classroom, schoolyard, bus"
-          defaultValue={initialData.location ?? ""}
-        />
-      </Field>
+        <Field>
+          <Label htmlFor="location">
+            Location <Required>*</Required>
+          </Label>
+          <Input
+            name="location"
+            id="location"
+            required
+            type="text"
+            placeholder="e.g. classroom, schoolyard, bus"
+            defaultValue={initialData.location ?? ""}
+          />
+        </Field>
 
-      <Field>
-        <Label htmlFor="involvedPersons">
-          Involved Persons <Required>*</Required>
-        </Label>
-        <Input
-          name="involvedPersons"
-          id="involvedPersons"
-          required
-          type="text"
-          defaultValue={initialData.involvedPersons ?? ""}
-          aria-describedby="involvedPersons-hint"
-        />
-        <Hint id="involvedPersons-hint">
-          Use initials, separate with commas (e.g., M.K., L.S.)
-        </Hint>
-      </Field>
+        <Field>
+          <Label htmlFor="involvedPersons">
+            Involved Persons <Required>*</Required>
+          </Label>
+          <Input
+            name="involvedPersons"
+            id="involvedPersons"
+            required
+            type="text"
+            defaultValue={initialData.involvedPersons ?? ""}
+            aria-describedby="involvedPersons-hint"
+          />
+          <Hint id="involvedPersons-hint">
+            Use initials, separate with commas (e.g., M.K., L.S.)
+          </Hint>
+        </Field>
 
-      <Field>
-        <Label htmlFor="witnesses">Witnesses (optional)</Label>
-        <Input
-          name="witnesses"
-          id="witnesses"
-          type="text"
-          defaultValue={initialData.witnesses ?? ""}
-          aria-describedby="witnesses-hint"
-        />
-        <Hint id="witnesses-hint">
-          Use initials, or descriptions, separate with commas (e.g., T.W.,
-          teacher, unknown students)
-        </Hint>
-      </Field>
+        <Field>
+          <Label htmlFor="witnesses">Witnesses (optional)</Label>
+          <Input
+            name="witnesses"
+            id="witnesses"
+            type="text"
+            defaultValue={initialData.witnesses ?? ""}
+            aria-describedby="witnesses-hint"
+          />
+          <Hint id="witnesses-hint">
+            Use initials, or descriptions, separate with commas (e.g., T.W.,
+            teacher, unknown students)
+          </Hint>
+        </Field>
 
-      <Field>
-        <Label htmlFor="category">
-          Category <Required>*</Required>
-        </Label>
-        <Select
-          name="category"
-          id="category"
-          required
-          defaultValue={initialData.category ?? ""}
-        >
-          <option value="" disabled>
-            Please select a category
-          </option>
-          <option value="verbal">Verbal</option>
-          <option value="physical">Physical</option>
-          <option value="digital">Digital</option>
-          <option value="discrimination">Discrimination</option>
-          <option value="other">Other</option>
-        </Select>
-      </Field>
+        <Field>
+          <Label htmlFor="category">
+            Category <Required>*</Required>
+          </Label>
+          <Select
+            name="category"
+            id="category"
+            required
+            defaultValue={initialData.category ?? ""}
+          >
+            <option value="" disabled>
+              Please select a category
+            </option>
+            <option value="verbal">Verbal</option>
+            <option value="physical">Physical</option>
+            <option value="digital">Digital</option>
+            <option value="discrimination">Discrimination</option>
+            <option value="other">Other</option>
+          </Select>
+        </Field>
 
-      <Field>
-        <Label htmlFor="severity">
-          Severity <Required>*</Required>
-        </Label>
-        <Select
-          name="severity"
-          id="severity"
-          required
-          defaultValue={initialData.severity ?? ""}
-        >
-          <option value="" disabled>
-            Please select severity
-          </option>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-          <option value="critical">Critical</option>
-        </Select>
-      </Field>
+        <Field>
+          <Label htmlFor="severity">
+            Severity <Required>*</Required>
+          </Label>
+          <Select
+            name="severity"
+            id="severity"
+            required
+            defaultValue={initialData.severity ?? ""}
+          >
+            <option value="" disabled>
+              Please select severity
+            </option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="critical">Critical</option>
+          </Select>
+        </Field>
 
-      <Field>
-        <Label htmlFor="description">
-          Description <Required>*</Required>
-        </Label>
-        <Textarea
-          name="description"
-          id="description"
-          required
-          minLength={10}
-          placeholder="Describe what happened (min. 10 characters)"
-          defaultValue={initialData.description ?? ""}
-        />
-      </Field>
+        <Field>
+          <Label htmlFor="description">
+            Description <Required>*</Required>
+          </Label>
+          <Textarea
+            name="description"
+            id="description"
+            required
+            minLength={10}
+            placeholder="Describe what happened (min. 10 characters)"
+            defaultValue={initialData.description ?? ""}
+          />
+        </Field>
 
-      <Field>
-        <Label htmlFor="impact">Impact (optional)</Label>
-        <Textarea
-          name="impact"
-          id="impact"
-          defaultValue={initialData.impact ?? ""}
-        />
-      </Field>
+        <Field>
+          <Label htmlFor="impact">Impact (optional)</Label>
+          <Textarea
+            name="impact"
+            id="impact"
+            defaultValue={initialData.impact ?? ""}
+          />
+        </Field>
 
-      <Field>
-        <Label htmlFor="reportedTo">Reported To (optional)</Label>
-        <Input
-          name="reportedTo"
-          id="reportedTo"
-          type="text"
-          defaultValue={initialData.reportedTo ?? ""}
-        />
-      </Field>
+        <Field>
+          <Label htmlFor="reportedTo">Reported To (optional)</Label>
+          <Input
+            name="reportedTo"
+            id="reportedTo"
+            type="text"
+            defaultValue={initialData.reportedTo ?? ""}
+          />
+        </Field>
 
-      <Field>
-        <Label htmlFor="followUp">Follow Up (optional)</Label>
-        <Textarea
-          name="followUp"
-          id="followUp"
-          defaultValue={initialData.followUp ?? ""}
-        />
-      </Field>
+        <Field>
+          <Label htmlFor="followUp">Follow Up (optional)</Label>
+          <Textarea
+            name="followUp"
+            id="followUp"
+            defaultValue={initialData.followUp ?? ""}
+          />
+        </Field>
 
-      <Button type="submit" disabled={isSubmitting}>
-        {submitLabel}
-      </Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {submitLabel}
+        </Button>
 
-      {onCancel && (
-        <CancelButton
-          type="button"
-          onClick={onCancel}
-          disabled={isSubmitting}
-          aria-label="Cancel"
-        >
-          {cancelLabel}
-        </CancelButton>
-      )}
-    </Form>
+        {onCancel && (
+          <CancelButton
+            type="button"
+            onClick={onCancel}
+            disabled={isSubmitting}
+            aria-label="Cancel"
+          >
+            {cancelLabel}
+          </CancelButton>
+        )}
+      </Form>
+    </PageContainer>
   );
 }
+
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 24px;
+`;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px;
-  max-width: 600px;
-  margin: 0 auto;
 `;
 
 const Field = styled.div`
@@ -310,8 +316,8 @@ const Button = styled.button`
 `;
 
 const CancelButton = styled(Button)`
-  background-color: transparent;
-  border: 1px solid var(--color-text);
+  background-color: var(--color-accent);
+  color: var(--color-button-text);
 `;
 
 const Hint = styled.p`

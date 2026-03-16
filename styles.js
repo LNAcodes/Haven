@@ -8,6 +8,7 @@ export default createGlobalStyle`
     --color-primary: #7BBFDF;
     --color-accent: #7D4E8C;
     --color-text: #2D3748;
+    --color-button-text: #ffffff;
     --color-success: #2d6a4f;
     --color-success-bg: #d8f3dc;
     --color-error: #92400e;
@@ -43,5 +44,7 @@ export default createGlobalStyle`
     color: var(--color-text);
     line-height: 1.6;
     min-height: 100dvh;
+    padding: 24px;
+    padding-bottom: 48px;
   }
 `;

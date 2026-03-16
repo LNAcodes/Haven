@@ -18,8 +18,8 @@ export default function HomePage() {
 const Main = styled.main`
   display: flex;
   flex-direction: column;
-  padding: 24px;
   gap: 16px;
+  padding-bottom: 24px;
 `;
 
 const Title = styled.h1`

@@ -1,17 +1,24 @@
 // component/IncidentCard/IncidentCard.js
 
 import styled from "styled-components";
+import Link from "next/link";
 
 export default function IncidentCard({ incident }) {
   const date = new Date(incident.date).toLocaleDateString("en-GB");
 
   return (
-    <Card $severity={incident.severity}>
-      <DateText>{date}</DateText>
-      <CategoryText>{incident.category}</CategoryText>
-    </Card>
+    <CardLink href={`/incidents/${incident._id}`}>
+      <Card $severity={incident.severity}>
+        <DateText>{date}</DateText>
+        <CategoryText>{incident.category}</CategoryText>
+      </Card>
+    </CardLink>
   );
 }
+
+const CardLink = styled(Link)`
+  text-decoration: none;
+`;
 
 const Card = styled.article`
   background-color: white;
