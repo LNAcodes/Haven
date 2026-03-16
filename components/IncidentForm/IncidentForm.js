@@ -275,7 +275,7 @@ const Textarea = styled.textarea`
   width: 100%;
   box-sizing: border-box;
   resize: vertical;
-  &:invalid {
+  &:user-invalid {
     border-color: var(--color-error);
   }
 `;

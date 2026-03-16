@@ -4,13 +4,13 @@ import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
 
 const fetcher = async (url) => {
-  const res = await fetch(url);
+  const fetchResponse = await fetch(url);
 
-  if (!res.ok) {
+  if (!fetchResponse.ok) {
     const error = new Error("An error occurred while fetching the data.");
 
-    error.info = await res.json();
-    error.status = res.status;
+    error.info = await fetchResponse.json();
+    error.status = fetchResponse.status;
     throw error;
   }
 
