@@ -22,7 +22,7 @@ export default function AddIncident() {
       throw new Error("Could not save new incident.");
     }
     await mutate();
-    router.push("/");
+    setTimeout(() => router.push("/"), 2500);
   }
   return (
     <>
