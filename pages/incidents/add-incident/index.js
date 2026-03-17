@@ -27,26 +27,17 @@ export default function AddIncident() {
   }
   return (
     <>
-      <PageContainer>
-        <BackButton onClick={() => router.push("/")}>← Back</BackButton>
-        <IncidentForm
-          submitLabel="Submit"
-          onSubmit={handleAddIncident}
-          cancelLabel="Cancel"
-          onCancel={() => router.push("/")}
-          resetOnSuccess
-        />
-      </PageContainer>
+      <BackButton onClick={() => router.push("/")}>← Back</BackButton>
+      <IncidentForm
+        submitLabel="Submit"
+        onSubmit={handleAddIncident}
+        cancelLabel="Cancel"
+        onCancel={() => router.push("/")}
+        resetOnSuccess
+      />
     </>
   );
 }
-
-const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding-bottom: 24px;
-`;
 
 const BackButton = styled.button`
   font-family: var(--font-family);

@@ -2,6 +2,7 @@
 
 import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
+import styled from "styled-components";
 
 const fetcher = async (url) => {
   const fetchResponse = await fetch(url);
@@ -22,8 +23,17 @@ export default function App({ Component, pageProps }) {
     <>
       <SWRConfig value={{ fetcher }}>
         <GlobalStyle />
-        <Component {...pageProps} />
+        <PageContainer>
+          <Component {...pageProps} />
+        </PageContainer>
       </SWRConfig>
     </>
   );
 }
+
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 24px;
+`;

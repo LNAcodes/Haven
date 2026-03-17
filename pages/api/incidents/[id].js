@@ -2,7 +2,6 @@
 
 import dbConnect from "@/db/connect";
 import Incident from "@/models/Incident";
-import { ObjectId } from "mongodb";
 
 export default async function handler(request, response) {
   await dbConnect();
@@ -10,12 +9,8 @@ export default async function handler(request, response) {
   const { id } = request.query;
 
   if (request.method === "GET") {
-    if (!ObjectId.isValid(id)) {
-      response.status(400).json({ message: "Invalid ID format" });
-      return;
-    }
     try {
-      const incident = await Incident.findOne({ _id: id });
+      const incident = await Incident.findById(id);
 
       if (!incident) {
         response.status(404).json({ message: "Incident not found" });

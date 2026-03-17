@@ -21,20 +21,17 @@ export default function IncidentDetailPage() {
 
   if (isLoading || !id || !incident) {
     return (
-      <>
-        <FeedbackMessage role="status" aria-live="polite">
-          Loading incident... Please wait...
-        </FeedbackMessage>
-      </>
+      <FeedbackMessage role="status" aria-live="polite">
+        Loading incident... Please wait...
+      </FeedbackMessage>
     );
   }
+
   if (!incident) {
     return (
-      <>
-        <FeedbackMessage role="status" aria-live="polite">
-          Incident not found.
-        </FeedbackMessage>
-      </>
+      <FeedbackMessage role="status" aria-live="polite">
+        Incident not found.
+      </FeedbackMessage>
     );
   }
 
@@ -42,97 +39,89 @@ export default function IncidentDetailPage() {
 
   return (
     <>
-      <PageContainer>
-        <BackButton onClick={() => router.push("/")}>← Back</BackButton>
-        <DetailPageContainer $severity={incident.severity}>
-          <FieldGroup>
-            <FieldLabel>Date</FieldLabel>
-            <FieldValue>{date}</FieldValue>
-          </FieldGroup>
+      <BackButton onClick={() => router.push("/")}>← Back</BackButton>
+      <DetailPageContainer $severity={incident.severity}>
+        <FieldGroup>
+          <FieldLabel>Date</FieldLabel>
+          <FieldValue>{date}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Time</FieldLabel>
-            <FieldValue>{incident.time}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Time</FieldLabel>
+          <FieldValue>{incident.time}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Location</FieldLabel>
-            <FieldValue>{incident.location}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Location</FieldLabel>
+          <FieldValue>{incident.location}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Involved Persons</FieldLabel>
-            <FieldValue>{incident.involvedPersons.join(", ")}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Involved Persons</FieldLabel>
+          <FieldValue>{incident.involvedPersons.join(", ")}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Witnesses</FieldLabel>
-            <FieldValue>
-              {incident.witnesses.length > 0
-                ? incident.witnesses.join(", ")
-                : "None"}
-            </FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Witnesses</FieldLabel>
+          <FieldValue>
+            {incident.witnesses.length > 0
+              ? incident.witnesses.join(", ")
+              : "None"}
+          </FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Category</FieldLabel>
-            <FieldValue>{incident.category}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Category</FieldLabel>
+          <FieldValue>{incident.category}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Severity</FieldLabel>
-            <FieldValue>{incident.severity}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Severity</FieldLabel>
+          <FieldValue>{incident.severity}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Description</FieldLabel>
-            <FieldValue>{incident.description}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Description</FieldLabel>
+          <FieldValue>{incident.description}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Impact</FieldLabel>
-            <FieldValue>{incident.impact || "Not specified"}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Impact</FieldLabel>
+          <FieldValue>{incident.impact || "Not specified"}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Reported To</FieldLabel>
-            <FieldValue>{incident.reportedTo || "Not specified"}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Reported To</FieldLabel>
+          <FieldValue>{incident.reportedTo || "Not specified"}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Follow Up</FieldLabel>
-            <FieldValue>{incident.followUp || "Not specified"}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Follow Up</FieldLabel>
+          <FieldValue>{incident.followUp || "Not specified"}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Status</FieldLabel>
-            <FieldValue>{incident.status}</FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Status</FieldLabel>
+          <FieldValue>{incident.status}</FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Created At</FieldLabel>
-            <FieldValue>
-              {new Date(incident.createdAt).toLocaleDateString("en-GB")}
-            </FieldValue>
-          </FieldGroup>
+        <FieldGroup>
+          <FieldLabel>Created At</FieldLabel>
+          <FieldValue>
+            {new Date(incident.createdAt).toLocaleDateString("en-GB")}
+          </FieldValue>
+        </FieldGroup>
 
-          <FieldGroup>
-            <FieldLabel>Updated At</FieldLabel>
-            <FieldValue>
-              {new Date(incident.updatedAt).toLocaleDateString("en-GB")}
-            </FieldValue>
-          </FieldGroup>
-        </DetailPageContainer>
-      </PageContainer>
+        <FieldGroup>
+          <FieldLabel>Updated At</FieldLabel>
+          <FieldValue>
+            {new Date(incident.updatedAt).toLocaleDateString("en-GB")}
+          </FieldValue>
+        </FieldGroup>
+      </DetailPageContainer>
     </>
   );
 }
-const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding-bottom: 24px;
-`;
 
 const DetailPageContainer = styled.main`
   background-color: white;

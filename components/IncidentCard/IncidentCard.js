@@ -7,7 +7,10 @@ export default function IncidentCard({ incident }) {
   const date = new Date(incident.date).toLocaleDateString("en-GB");
 
   return (
-    <CardLink href={`/incidents/${incident._id}`}>
+    <CardLink
+      href={`/incidents/${incident._id}`}
+      aria-label={`View incident from ${date} - ${incident.category}`}
+    >
       <Card $severity={incident.severity}>
         <DateText>{date}</DateText>
         <CategoryText>{incident.category}</CategoryText>
