@@ -8,13 +8,14 @@ export default createGlobalStyle`
     --color-primary: #7BBFDF;
     --color-accent: #7D4E8C;
     --color-text: #2D3748;
+    --color-button-text: #ffffff;
     --color-success: #2d6a4f;
     --color-success-bg: #d8f3dc;
     --color-error: #92400e;
     --color-error-bg: #fef3c7;
-    --color-severity-low: #2d6a4f;
-    --color-severity-medium: #b45309;
-    --color-severity-high: #9a3412;
+    --color-severity-low: #52b788;
+    --color-severity-medium: #e0a800;
+    --color-severity-high: #5b6bb5;
     --color-severity-critical: #6d326d;
     --font-family: 'Inter', system-ui, sans-serif;
     --font-weight-regular: 400;
@@ -43,5 +44,7 @@ export default createGlobalStyle`
     color: var(--color-text);
     line-height: 1.6;
     min-height: 100dvh;
+    padding: 24px;
+    padding-bottom: 48px;
   }
 `;

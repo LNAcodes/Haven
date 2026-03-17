@@ -2,19 +2,20 @@
 
 import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
+import styled from "styled-components";
 
 const fetcher = async (url) => {
-  const res = await fetch(url);
+  const fetchResponse = await fetch(url);
 
-  if (!res.ok) {
+  if (!fetchResponse.ok) {
     const error = new Error("An error occurred while fetching the data.");
 
-    error.info = await res.json();
-    error.status = res.status;
+    error.info = await fetchResponse.json();
+    error.status = fetchResponse.status;
     throw error;
   }
 
-  return res.json();
+  return fetchResponse.json();
 };
 
 export default function App({ Component, pageProps }) {
@@ -22,8 +23,17 @@ export default function App({ Component, pageProps }) {
     <>
       <SWRConfig value={{ fetcher }}>
         <GlobalStyle />
-        <Component {...pageProps} />
+        <PageContainer>
+          <Component {...pageProps} />
+        </PageContainer>
       </SWRConfig>
     </>
   );
 }
+
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 24px;
+`;
