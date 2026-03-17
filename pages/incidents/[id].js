@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState } from "react";
 import ConfirmationDialog from "@/components/ConfirmationDialog/ConfirmationDialog";
+import Link from "next/link";
 
 export default function IncidentDetailPage() {
   const router = useRouter();
@@ -67,12 +68,16 @@ export default function IncidentDetailPage() {
         </SuccessMessage>
       ) : null}
       <DetailPageContainer $severity={incident.severity}>
-        <DeleteButton
-          onClick={() => setIsDialogOpen(true)}
-          disabled={isDeleting}
-        >
-          {isDeleting ? "Deleting ..." : "🗑️"}
-        </DeleteButton>
+        <ButtonGroup>
+          <EditLink href={`/edit-incident/${id}`}>✏️</EditLink>
+
+          <DeleteButton
+            onClick={() => setIsDialogOpen(true)}
+            disabled={isDeleting}
+          >
+            {isDeleting ? "Deleting ..." : "🗑️"}
+          </DeleteButton>
+        </ButtonGroup>
         {isDialogOpen ? (
           <ConfirmationDialog
             onConfirm={handleDelete}
@@ -230,4 +235,25 @@ const SuccessMessage = styled.p`
   padding: 8px 12px;
   border-radius: 4px;
   text-align: center;
+`;
+
+const EditLink = styled(Link)`
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-medium);
+  min-height: 44px;
+  padding: 0 16px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border-radius: 4px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 8px;
+  align-self: flex-end;
 `;

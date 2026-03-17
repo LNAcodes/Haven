@@ -24,6 +24,66 @@ export default async function handler(request, response) {
       return;
     }
   }
+
+  if (["PATCH", "PUT"].includes(request.method)) {
+    try {
+      const {
+        involvedPersons,
+        witnesses: witnessesInput,
+        date,
+        time,
+        location,
+        category,
+        severity,
+        description,
+        impact,
+        reportedTo,
+        followUp,
+      } = request.body;
+
+      const involvedPersonsArray = involvedPersons
+        .split(",")
+        .map((person) => person.trim());
+
+      const witnessesArray = witnessesInput
+        ? witnessesInput.split(",").map((witness) => witness.trim())
+        : [];
+
+      const updated = await Incident.findByIdAndUpdate(
+        id,
+        {
+          involvedPersons: involvedPersonsArray,
+          witnesses: witnessesArray,
+          date,
+          time,
+          location,
+          category,
+          severity,
+          description,
+          impact,
+          reportedTo,
+          followUp,
+        },
+        { new: true, runValidators: true }
+      );
+
+      if (!updated) {
+        response.status(404).json({ message: "Incident not found" });
+        return;
+      }
+
+      response.status(200).json(updated);
+      return;
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        response.status(400).json({ message: error.message });
+        return;
+      }
+      response.status(500).json({ message: error.message });
+      return;
+    }
+  }
+
   if (request.method === "DELETE") {
     try {
       const incident = await Incident.findByIdAndDelete(id);
@@ -31,6 +91,7 @@ export default async function handler(request, response) {
         response.status(404).json({ message: "Incident not found" });
         return;
       }
+
       response.status(200).json({ message: "Incident deleted" });
       return;
     } catch (error) {
