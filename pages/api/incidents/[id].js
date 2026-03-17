@@ -24,4 +24,18 @@ export default async function handler(request, response) {
       return;
     }
   }
+  if (request.method === "DELETE") {
+    try {
+      const incident = await Incident.findByIdAndDelete(id);
+      if (!incident) {
+        response.status(404).json({ message: "Incident not found" });
+        return;
+      }
+      response.status(200).json({ message: "Incident deleted" });
+      return;
+    } catch (error) {
+      response.status(500).json({ message: error.message });
+      return;
+    }
+  }
 }
