@@ -3,12 +3,14 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import { useState } from "react";
 
 export default function IncidentDetailPage() {
   const router = useRouter();
   const { id } = router.query;
   const incidentUrl = id ? `/api/incidents/${id}` : null;
   const { data: incident, error, isLoading } = useSWR(incidentUrl);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   if (error) {
     return (
@@ -41,6 +43,7 @@ export default function IncidentDetailPage() {
     <>
       <BackButton onClick={() => router.push("/")}>← Back</BackButton>
       <DetailPageContainer $severity={incident.severity}>
+        <DeleteButton onDelete={() => setIsDialogOpen(true)}>🗑️</DeleteButton>
         <FieldGroup>
           <FieldLabel>Date</FieldLabel>
           <FieldValue>{date}</FieldValue>
@@ -183,3 +186,5 @@ const BackButton = styled.button`
   align-items: center;
   width: fit-content;
 `;
+
+const DeleteButton = styled.button``;
