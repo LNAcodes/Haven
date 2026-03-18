@@ -2,11 +2,22 @@
 
 import dbConnect from "@/db/connect";
 import Incident from "@/models/Incident";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
   await dbConnect();
 
   const { id } = request.query;
+  const session = await getServerSession(request, response, authOptions);
+  const token = await getToken({ req: request });
+  const userId = token?.sub;
+
+  if (!session) {
+    response.status(401).json({ message: "Unauthorized" });
+    return;
+  }
 
   if (request.method === "GET") {
     try {
@@ -14,6 +25,11 @@ export default async function handler(request, response) {
 
       if (!incident) {
         response.status(404).json({ message: "Incident not found" });
+        return;
+      }
+
+      if (incident.userId !== userId) {
+        response.status(403).json({ message: "Forbidden" });
         return;
       }
 
@@ -72,6 +88,10 @@ export default async function handler(request, response) {
         return;
       }
 
+      if (updated.userId !== userId) {
+        response.status(403).json({ message: "Forbidden" });
+        return;
+      }
       response.status(200).json(updated);
       return;
     } catch (error) {
@@ -86,12 +106,19 @@ export default async function handler(request, response) {
 
   if (request.method === "DELETE") {
     try {
-      const incident = await Incident.findByIdAndDelete(id);
+      const incident = await Incident.findById(id);
+
       if (!incident) {
         response.status(404).json({ message: "Incident not found" });
         return;
       }
 
+      if (incident.userId !== userId) {
+        response.status(403).json({ message: "Forbidden" });
+        return;
+      }
+
+      await Incident.findByIdAndDelete(id);
       response.status(200).json({ message: "Incident deleted" });
       return;
     } catch (error) {
