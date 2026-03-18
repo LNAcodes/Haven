@@ -44,7 +44,6 @@ export default createGlobalStyle`
     color: var(--color-text);
     line-height: 1.6;
     min-height: 100dvh;
-    padding: 24px;
-    padding-bottom: 48px;
+    padding: 24px 24px 88px 24px;
   }
 `;
