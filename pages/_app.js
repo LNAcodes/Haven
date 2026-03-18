@@ -3,6 +3,7 @@
 import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
 import styled from "styled-components";
+import Footer from "@/components/Footer/Footer";
 
 const fetcher = async (url) => {
   const fetchResponse = await fetch(url);
@@ -24,7 +25,10 @@ export default function App({ Component, pageProps }) {
       <SWRConfig value={{ fetcher }}>
         <GlobalStyle />
         <PageContainer>
-          <Component {...pageProps} />
+          <Main>
+            <Component {...pageProps} />
+          </Main>
+          <Footer />
         </PageContainer>
       </SWRConfig>
     </>
@@ -32,8 +36,11 @@ export default function App({ Component, pageProps }) {
 }
 
 const PageContainer = styled.div`
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding-bottom: 24px;
+`;
+
+const Main = styled.main`
+  flex: 1;
 `;
