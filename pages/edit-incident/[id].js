@@ -5,13 +5,20 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function EditIncidentPage() {
+  const { data: session, status } = useSession();
   const router = useRouter();
   const { id } = router.query;
   const incidentUrl = id ? `/api/incidents/${id}` : null;
   const { data: incident, isLoading, error } = useSWR(incidentUrl);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  if (status === "unauthenticated") {
+    router.push("/");
+    return null;
+  }
 
   if (isLoading || !id || !incident) {
     return (
