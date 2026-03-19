@@ -3,10 +3,14 @@
 import { useRouter } from "next/router";
 import { useSession, signIn } from "next-auth/react";
 import styled from "styled-components";
+import { useState } from "react";
 
 export default function LandingPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [showForm, setShowForm] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   if (status === "authenticated") {
     router.push("/");
@@ -14,15 +18,101 @@ export default function LandingPage() {
   }
 
   return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
+    <LPContainer>
+      <Title>Haven</Title>
+      <DescreetMessage>A place just for you.</DescreetMessage>
+      <LoginButton onClick={() => signIn("github")}>
+        Login with Github
+      </LoginButton>
+      <TestButton onClick={() => setShowForm(true)}>
+        Login for Testing
+      </TestButton>
+
+      {showForm ? (
+        <>
+          <Input
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+            placeholder="username"
+          />
+          <Input
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="password"
+          />
+          <LoginButton
+            onClick={() => signIn("credentials", { username, password })}
+          >
+            Submit
+          </LoginButton>
+        </>
+      ) : null}
+    </LPContainer>
   );
 }
 
-const Title = styled.h1``;
+const LPContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  gap: 16px;
+  padding: 24px;
+`;
 
-const DescreetMessage = styled.p``;
+const Title = styled.h1`
+  font-family: var(--font-family);
+  font-size: 2rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+`;
 
-const LogButton = styled.button``;
+const DescreetMessage = styled.p`
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: var(--color-text);
+  text-align: center;
+`;
+
+const LoginButton = styled.button`
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  min-height: 48px;
+  width: 100%;
+  max-width: 300px;
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
+const TestButton = styled.button`
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  min-height: 44px;
+  width: 100%;
+  max-width: 300px;
+  background-color: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
+const Input = styled.input`
+  font-family: var(--font-family);
+  font-size: 1rem;
+  padding: 8px 12px;
+  min-height: 48px;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+`;
