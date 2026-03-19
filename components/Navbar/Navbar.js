@@ -3,6 +3,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
 
 export default function Navbar() {
   const router = useRouter();
@@ -53,6 +54,12 @@ export default function Navbar() {
             <NavIcon>📋</NavIcon>
             <NavLabel>List</NavLabel>
           </NavLink>
+        </NavItem>
+
+        <NavItem>
+          <NavButton onClick={() => signOut({ callbackUrl: "/landing" })}>
+            🚪
+          </NavButton>
         </NavItem>
       </NavList>
     </NavbarContainer>
@@ -116,4 +123,16 @@ const NavLabel = styled.span`
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+`;
+
+const NavButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-family: var(--font-family);
 `;
