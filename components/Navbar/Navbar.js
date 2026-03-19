@@ -3,10 +3,11 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
   const router = useRouter();
+  const { status } = useSession();
   const path = router.pathname;
 
   const isActive = (href) => {
@@ -56,11 +57,13 @@ export default function Navbar() {
           </NavLink>
         </NavItem>
 
-        <NavItem>
-          <NavButton onClick={() => signOut({ callbackUrl: "/landing" })}>
-            🚪
-          </NavButton>
-        </NavItem>
+        {status === "authenticated" ? (
+          <NavItem>
+            <NavButton onClick={() => signOut({ callbackUrl: "/landing" })}>
+              🚪
+            </NavButton>
+          </NavItem>
+        ) : null}
       </NavList>
     </NavbarContainer>
   );

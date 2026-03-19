@@ -29,7 +29,12 @@ export default function LandingPage() {
       </TestButton>
 
       {showForm ? (
-        <>
+        <CredentialsForm
+          onSubmit={(event) => {
+            event.preventDefault();
+            signIn("credentials", { username, password });
+          }}
+        >
           <Input
             value={username}
             onChange={(event) => setUsername(event.target.value)}
@@ -46,7 +51,7 @@ export default function LandingPage() {
           >
             Submit
           </LoginButton>
-        </>
+        </CredentialsForm>
       ) : null}
     </LPContainer>
   );
@@ -115,4 +120,13 @@ const Input = styled.input`
   width: 100%;
   max-width: 300px;
   box-sizing: border-box;
+`;
+
+const CredentialsForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 300px;
+  align-items: center;
 `;
