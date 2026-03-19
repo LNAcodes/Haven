@@ -59,7 +59,10 @@ export default function Navbar() {
 
         {status === "authenticated" ? (
           <NavItem>
-            <NavButton onClick={() => signOut({ callbackUrl: "/landing" })}>
+            <NavButton
+              onClick={() => signOut({ callbackUrl: "/landing" })}
+              aria-label="Logout"
+            >
               🚪
             </NavButton>
           </NavItem>

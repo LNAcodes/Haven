@@ -13,7 +13,7 @@ export default function LandingPage() {
   const [password, setPassword] = useState("");
 
   if (status === "authenticated") {
-    router.push("/");
+    router.push("/welcome");
     return null;
   }
 
