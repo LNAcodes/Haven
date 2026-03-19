@@ -4,6 +4,7 @@ import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
 import styled from "styled-components";
 import Footer from "@/components/Footer/Footer";
+import { SessionProvider } from "next-auth/react";
 
 const fetcher = async (url) => {
   const fetchResponse = await fetch(url);
@@ -21,17 +22,19 @@ const fetcher = async (url) => {
 
 export default function App({ Component, pageProps }) {
   return (
-    <>
-      <SWRConfig value={{ fetcher }}>
-        <GlobalStyle />
-        <PageContainer>
-          <Main>
-            <Component {...pageProps} />
-          </Main>
-          <Footer />
-        </PageContainer>
-      </SWRConfig>
-    </>
+    <SessionProvider session={pageProps.session}>
+      <Wrapper>
+        <SWRConfig value={{ fetcher }}>
+          <GlobalStyle />
+          <PageContainer>
+            <Main>
+              <Component {...pageProps} />
+            </Main>
+            <Footer />
+          </PageContainer>
+        </SWRConfig>
+      </Wrapper>
+    </SessionProvider>
   );
 }
 
@@ -43,4 +46,11 @@ const PageContainer = styled.div`
 
 const Main = styled.main`
   flex: 1;
+`;
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 `;

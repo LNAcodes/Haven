@@ -15,6 +15,7 @@
     "mongodb": "^7.1.0",
     "mongoose": "^9.2.4",
     "next": "13.4.8",
+    "next-auth": "^4.24.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^6.0.2",

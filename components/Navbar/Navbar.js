@@ -3,13 +3,15 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
   const router = useRouter();
+  const { status } = useSession();
   const path = router.pathname;
 
   const isActive = (href) => {
-    if (href === "/") return path === "/";
+    if (href === "/welcome") return path === "/welcome";
     if (href === "/incidents") return path === "/incidents";
     return path === href;
   };
@@ -19,10 +21,10 @@ export default function Navbar() {
       <NavList>
         <NavItem>
           <NavLink
-            href="/"
+            href="/welcome"
             aria-label="Go to home"
-            aria-current={isActive("/") ? "page" : undefined}
-            $active={isActive("/")}
+            aria-current={isActive("/welcome") ? "page" : undefined}
+            $active={isActive("/welcome")}
           >
             <NavIcon>🏠</NavIcon>
             <NavLabel>Home</NavLabel>
@@ -54,6 +56,17 @@ export default function Navbar() {
             <NavLabel>List</NavLabel>
           </NavLink>
         </NavItem>
+
+        {status === "authenticated" ? (
+          <NavItem>
+            <NavButton
+              onClick={() => signOut({ callbackUrl: "/landing" })}
+              aria-label="Logout"
+            >
+              🚪
+            </NavButton>
+          </NavItem>
+        ) : null}
       </NavList>
     </NavbarContainer>
   );
@@ -116,4 +129,16 @@ const NavLabel = styled.span`
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+`;
+
+const NavButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-family: var(--font-family);
 `;

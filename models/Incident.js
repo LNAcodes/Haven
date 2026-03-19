@@ -55,6 +55,7 @@ const incidentSchema = new Schema(
       enum: ["complete", "incomplete"],
       default: "complete",
     },
+    userId: { type: String, required: true },
   },
   {
     timestamps: true,

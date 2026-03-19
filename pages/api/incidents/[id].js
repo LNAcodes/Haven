@@ -2,58 +2,63 @@
 
 import dbConnect from "@/db/connect";
 import Incident from "@/models/Incident";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
   await dbConnect();
 
   const { id } = request.query;
+  const session = await getServerSession(request, response, authOptions);
+  const token = await getToken({ req: request });
+  const userId = token?.sub;
 
-  if (request.method === "GET") {
-    try {
-      const incident = await Incident.findById(id);
-
-      if (!incident) {
-        response.status(404).json({ message: "Incident not found" });
-        return;
-      }
-
-      response.status(200).json(incident);
-      return;
-    } catch (error) {
-      response.status(500).json({ message: error.message });
-      return;
-    }
+  if (!session) {
+    response.status(401).json({ message: "Unauthorized" });
+    return;
   }
 
-  if (["PATCH", "PUT"].includes(request.method)) {
-    try {
-      const {
-        involvedPersons,
-        witnesses: witnessesInput,
-        date,
-        time,
-        location,
-        category,
-        severity,
-        description,
-        impact,
-        reportedTo,
-        followUp,
-      } = request.body;
+  switch (request.method) {
+    case "GET": {
+      try {
+        const incident = await Incident.findById(id);
 
-      const involvedPersonsArray = involvedPersons
-        .split(",")
-        .map((person) => person.trim());
+        if (!incident) {
+          response.status(404).json({ message: "Incident not found" });
+          break;
+        }
 
-      const witnessesArray = witnessesInput
-        ? witnessesInput.split(",").map((witness) => witness.trim())
-        : [];
+        if (incident.userId !== userId) {
+          response.status(403).json({ message: "Forbidden" });
+          break;
+        }
 
-      const updated = await Incident.findByIdAndUpdate(
-        id,
-        {
-          involvedPersons: involvedPersonsArray,
-          witnesses: witnessesArray,
+        response.status(200).json(incident);
+        break;
+      } catch (error) {
+        response.status(500).json({ message: error.message });
+        break;
+      }
+    }
+
+    case "PATCH":
+    case "PUT": {
+      try {
+        const incident = await Incident.findById(id);
+
+        if (!incident) {
+          response.status(404).json({ message: "Incident not found" });
+          break;
+        }
+
+        if (incident.userId !== userId) {
+          response.status(403).json({ message: "Forbidden" });
+          break;
+        }
+        const {
+          involvedPersons,
+          witnesses: witnessesInput,
           date,
           time,
           location,
@@ -63,40 +68,71 @@ export default async function handler(request, response) {
           impact,
           reportedTo,
           followUp,
-        },
-        { new: true, runValidators: true }
-      );
+        } = request.body;
 
-      if (!updated) {
-        response.status(404).json({ message: "Incident not found" });
-        return;
-      }
+        const involvedPersonsArray = involvedPersons
+          .split(",")
+          .map((person) => person.trim());
 
-      response.status(200).json(updated);
-      return;
-    } catch (error) {
-      if (error.name === "ValidationError") {
-        response.status(400).json({ message: error.message });
-        return;
+        const witnessesArray = witnessesInput
+          ? witnessesInput.split(",").map((witness) => witness.trim())
+          : [];
+
+        const updated = await Incident.findByIdAndUpdate(
+          id,
+          {
+            involvedPersons: involvedPersonsArray,
+            witnesses: witnessesArray,
+            date,
+            time,
+            location,
+            category,
+            severity,
+            description,
+            impact,
+            reportedTo,
+            followUp,
+          },
+          { new: true, runValidators: true }
+        );
+
+        response.status(200).json(updated);
+        break;
+      } catch (error) {
+        if (error.name === "ValidationError") {
+          response.status(400).json({ message: error.message });
+          break;
+        }
+        response.status(500).json({ message: error.message });
+        break;
       }
-      response.status(500).json({ message: error.message });
-      return;
     }
-  }
 
-  if (request.method === "DELETE") {
-    try {
-      const incident = await Incident.findByIdAndDelete(id);
-      if (!incident) {
-        response.status(404).json({ message: "Incident not found" });
-        return;
+    case "DELETE": {
+      try {
+        const incident = await Incident.findById(id);
+
+        if (!incident) {
+          response.status(404).json({ message: "Incident not found" });
+          break;
+        }
+
+        if (incident.userId !== userId) {
+          response.status(403).json({ message: "Forbidden" });
+          break;
+        }
+
+        await Incident.findByIdAndDelete(id);
+        response.status(200).json({ message: "Incident deleted" });
+        break;
+      } catch (error) {
+        response.status(500).json({ message: error.message });
+        break;
       }
-
-      response.status(200).json({ message: "Incident deleted" });
-      return;
-    } catch (error) {
-      response.status(500).json({ message: error.message });
-      return;
     }
+
+    default:
+      response.status(405).json({ message: "Method not allowed" });
+      break;
   }
 }
