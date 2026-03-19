@@ -7,14 +7,18 @@ import styled from "styled-components";
 import { useSession } from "next-auth/react";
 
 export default function EditIncidentPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const { id } = router.query;
   const incidentUrl = id ? `/api/incidents/${id}` : null;
   const { data: incident, isLoading, error } = useSWR(incidentUrl);
 
   if (status === "unauthenticated") {
-    router.push("/");
+    router.push("/landing");
+    return null;
+  }
+
+  if (status === "loading") {
     return null;
   }
 

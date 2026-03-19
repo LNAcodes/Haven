@@ -39,7 +39,11 @@ export const authOptions = {
   ],
   pages: {
     signIn: "/landing",
-    newUser: "/welcome",
+  },
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      return `${baseUrl}/welcome`;
+    },
   },
 };
 

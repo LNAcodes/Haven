@@ -1,8 +1,21 @@
 // pages/index.js
 import Link from "next/link";
 import styled from "styled-components";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function HomePage() {
+  const router = useRouter();
+  const { status } = useSession();
+
+  if (status === "unauthenticated") {
+    router.push("/landing");
+    return null;
+  }
+
+  if (status === "loading") {
+    return null;
+  }
   return (
     <Main>
       <Title>Welcome to Haven</Title>
