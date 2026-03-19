@@ -45,6 +45,17 @@ export default async function handler(request, response) {
     case "PATCH":
     case "PUT": {
       try {
+        const incident = await Incident.findById(id);
+
+        if (!incident) {
+          response.status(404).json({ message: "Incident not found" });
+          break;
+        }
+
+        if (incident.userId !== userId) {
+          response.status(403).json({ message: "Forbidden" });
+          break;
+        }
         const {
           involvedPersons,
           witnesses: witnessesInput,
@@ -85,15 +96,6 @@ export default async function handler(request, response) {
           { new: true, runValidators: true }
         );
 
-        if (!updated) {
-          response.status(404).json({ message: "Incident not found" });
-          break;
-        }
-
-        if (updated.userId !== userId) {
-          response.status(403).json({ message: "Forbidden" });
-          break;
-        }
         response.status(200).json(updated);
         break;
       } catch (error) {

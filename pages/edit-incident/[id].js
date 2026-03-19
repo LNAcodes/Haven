@@ -4,7 +4,6 @@ import IncidentForm from "@/components/IncidentForm/IncidentForm";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { useState } from "react";
 import { useSession } from "next-auth/react";
 
 export default function EditIncidentPage() {
@@ -13,7 +12,6 @@ export default function EditIncidentPage() {
   const { id } = router.query;
   const incidentUrl = id ? `/api/incidents/${id}` : null;
   const { data: incident, isLoading, error } = useSWR(incidentUrl);
-  const [showSuccess, setShowSuccess] = useState(false);
 
   if (status === "unauthenticated") {
     router.push("/");
@@ -63,11 +61,6 @@ export default function EditIncidentPage() {
 
   return (
     <>
-      {showSuccess ? (
-        <SuccessMessage role="status" aria-live="polite">
-          Incident successfully updated.
-        </SuccessMessage>
-      ) : null}
       <BackButton onClick={() => router.push(`/incidents/${id}`)}>
         ← Back
       </BackButton>
@@ -110,13 +103,4 @@ const PageTitle = styled.h1`
   font-family: var(--font-family);
   font-size: 1.2rem;
   color: var(--color-text);
-`;
-
-const SuccessMessage = styled.p`
-  font-family: var(--font-family);
-  color: var(--color-success);
-  background-color: var(--color-success-bg);
-  padding: 8px 12px;
-  border-radius: 4px;
-  text-align: center;
 `;
