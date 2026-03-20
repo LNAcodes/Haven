@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import ConfirmationDialog from "@/components/ConfirmationDialog/ConfirmationDialog";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function IncidentDetailPage({ user }) {
   const router = useRouter();
@@ -20,7 +22,7 @@ export default function IncidentDetailPage({ user }) {
   if (error) {
     return (
       <>
-        <BackButton onClick={() => router.push("/")}>← Back</BackButton>
+        <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
         <FeedbackMessage role="alert">Error loading incident.</FeedbackMessage>
       </>
     );
@@ -55,28 +57,30 @@ export default function IncidentDetailPage({ user }) {
 
     setShowDeleteSuccess(true);
     setIsDialogOpen(false);
-    setTimeout(() => router.push("/"), 2000);
+    setTimeout(() => router.push("/incidents"), 2000);
   }
 
   const date = new Date(incident.date).toLocaleDateString("en-GB");
 
   return (
-    <>
-      <BackButton onClick={() => router.push("/")}>← Back</BackButton>
+    <DetailWrapper>
+      <BackButton onClick={() => router.push("/incidents")}>← Back</BackButton>
       {showDeleteSuccess ? (
         <SuccessMessage role="status" aria-live="polite">
-          Incident successfully deleted.
+          Deleted. Take care. 💙
         </SuccessMessage>
       ) : null}
       <DetailPageContainer $severity={incident.severity}>
         <ButtonGroup>
-          <EditLink href={`/edit-incident/${id}`}>✏️</EditLink>
+          <EditLink href={`/edit-incident/${id}`}>
+            <FontAwesomeIcon icon={faPen} />
+          </EditLink>
 
           <DeleteButton
             onClick={() => setIsDialogOpen(true)}
             disabled={isDeleting}
           >
-            {isDeleting ? "Deleting ..." : "🗑️"}
+            {isDeleting ? "Deleting ..." : <FontAwesomeIcon icon={faTrash} />}
           </DeleteButton>
         </ButtonGroup>
         {isDialogOpen ? (
@@ -140,17 +144,21 @@ export default function IncidentDetailPage({ user }) {
         <FieldGroup>
           <FieldLabel>Created At</FieldLabel>
           <FieldValue>
-            {new Date(incident.createdAt).toLocaleDateString("en-GB")}
+            {incident.createdAt
+              ? new Date(incident.createdAt).toLocaleDateString("en-GB")
+              : "NotAvailable"}
           </FieldValue>
         </FieldGroup>
         <FieldGroup>
           <FieldLabel>Updated At</FieldLabel>
           <FieldValue>
-            {new Date(incident.updatedAt).toLocaleDateString("en-GB")}
+            {incident.updatedAt
+              ? new Date(incident.updatedAt).toLocaleDateString("en-GB")
+              : "Not available"}
           </FieldValue>
         </FieldGroup>
       </DetailPageContainer>
-    </>
+    </DetailWrapper>
   );
 }
 
@@ -177,7 +185,6 @@ const DetailPageContainer = styled.main`
   padding: 24px 24px 24px 32px;
   display: flex;
   flex-direction: column;
-  padding-bottom: 24px;
   gap: 16px;
   border-left: 8px solid
     ${({ $severity }) => {
@@ -238,7 +245,7 @@ const DeleteButton = styled.button`
   min-height: 44px;
   padding: 0 16px;
   background-color: var(--color-background);
-  color: var(--color-button-text);
+  color: var(--color-text);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -274,4 +281,11 @@ const ButtonGroup = styled.div`
   display: flex;
   gap: 8px;
   align-self: flex-end;
+`;
+
+const DetailWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 24px;
 `;

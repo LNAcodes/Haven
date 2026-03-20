@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { useSession, signIn } from "next-auth/react";
 import styled from "styled-components";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 export default function LandingPage() {
   const { data: session, status } = useSession();
@@ -22,6 +24,7 @@ export default function LandingPage() {
       <Title>Haven</Title>
       <DescreetMessage>A place just for you.</DescreetMessage>
       <LoginButton onClick={() => signIn("github")}>
+        <FontAwesomeIcon icon={faGithub} />
         Login with Github
       </LoginButton>
       <TestButton onClick={() => setShowForm(true)}>
@@ -93,6 +96,10 @@ const LoginButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 `;
 
 const TestButton = styled.button`

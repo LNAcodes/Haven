@@ -11,9 +11,7 @@ export default function WelcomePage({ user }) {
       <Message>Take your time. You are safe here.</Message>
       <ButtonGroup>
         <ActionLink href="/incidents">View my records</ActionLink>
-        <ActionLink href="/incidents/add-incident">
-          Document new incident
-        </ActionLink>
+        <ActionLink href="/incidents/add-incident">Add a note</ActionLink>
       </ButtonGroup>
     </WelcomeContainer>
   );

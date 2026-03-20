@@ -13,7 +13,9 @@ export default function IncidentCard({ incident }) {
     >
       <Card $severity={incident.severity}>
         <DateText>{date}</DateText>
-        <CategoryText>{incident.category}</CategoryText>
+        <CategoryText>
+          {categoryAbbr[incident.category] || incident.category}
+        </CategoryText>
       </Card>
     </CardLink>
   );
@@ -54,3 +56,11 @@ const CategoryText = styled.span`
   color: var(--color-accent);
   text-transform: capitalize;
 `;
+
+const categoryAbbr = {
+  verbal: "V",
+  physical: "Ph",
+  digital: "Di",
+  discrimination: "Dc",
+  other: "O",
+};

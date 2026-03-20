@@ -24,19 +24,20 @@ export default function AddIncident({ user }) {
       throw new Error("Could not save new incident.");
     }
     await mutate();
-    setTimeout(() => router.push("/"), 2500);
+    setTimeout(() => router.push("/welcome"), 2500);
   }
   return (
-    <>
-      <BackButton onClick={() => router.push("/")}>← Back</BackButton>
+    <AddIncidentContainer>
+      <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
+      <PageTitle>Add a note</PageTitle>
       <IncidentForm
-        submitLabel="Submit"
+        submitLabel="Save"
         onSubmit={handleAddIncident}
         cancelLabel="Cancel"
-        onCancel={() => router.push("/")}
+        onCancel={() => router.push("/welcome")}
         resetOnSuccess
       />
-    </>
+    </AddIncidentContainer>
   );
 }
 
@@ -70,4 +71,17 @@ const BackButton = styled.button`
   display: flex;
   align-items: center;
   width: fit-content;
+`;
+
+const AddIncidentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const PageTitle = styled.h1`
+  font-family: var(--font-family);
+  font-size: 1.2rem;
+  color: var(--color-text);
+  text-align: center;
 `;

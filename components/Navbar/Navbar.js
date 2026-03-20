@@ -4,6 +4,13 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHouse,
+  faPlus,
+  faList,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
   const router = useRouter();
@@ -26,7 +33,9 @@ export default function Navbar() {
             aria-current={isActive("/welcome") ? "page" : undefined}
             $active={isActive("/welcome")}
           >
-            <NavIcon>🏠</NavIcon>
+            <NavIcon>
+              <FontAwesomeIcon icon={faHouse} />
+            </NavIcon>
             <NavLabel>Home</NavLabel>
           </NavLink>
         </NavItem>
@@ -40,7 +49,9 @@ export default function Navbar() {
             }
             $active={isActive("/incidents/add-incident")}
           >
-            <NavIcon>➕</NavIcon>
+            <NavIcon>
+              <FontAwesomeIcon icon={faPlus} />
+            </NavIcon>
             <NavLabel>Add</NavLabel>
           </NavLink>
         </NavItem>
@@ -52,7 +63,9 @@ export default function Navbar() {
             aria-current={isActive("/incidents") ? "page" : undefined}
             $active={isActive("/incidents")}
           >
-            <NavIcon>📋</NavIcon>
+            <NavIcon>
+              <FontAwesomeIcon icon={faList} />
+            </NavIcon>
             <NavLabel>List</NavLabel>
           </NavLink>
         </NavItem>
@@ -63,7 +76,7 @@ export default function Navbar() {
               onClick={() => signOut({ callbackUrl: "/landing" })}
               aria-label="Logout"
             >
-              🚪
+              <FontAwesomeIcon icon={faRightFromBracket} />
             </NavButton>
           </NavItem>
         ) : null}
@@ -76,7 +89,7 @@ const NavbarContainer = styled.nav`
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: white;
+  background-color: var(--color-background);
   border-top: 1px solid var(--color-primary);
   height: 64px;
   display: flex;
@@ -141,4 +154,5 @@ const NavButton = styled.button`
   cursor: pointer;
   font-size: 1.2rem;
   font-family: var(--font-family);
+  color: var(--color-accent);
 `;
