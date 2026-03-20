@@ -57,14 +57,14 @@ export default function IncidentDetailPage({ user }) {
 
     setShowDeleteSuccess(true);
     setIsDialogOpen(false);
-    setTimeout(() => router.push("/welcome"), 2000);
+    setTimeout(() => router.push("/incidents"), 2000);
   }
 
   const date = new Date(incident.date).toLocaleDateString("en-GB");
 
   return (
     <DetailWrapper>
-      <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
+      <BackButton onClick={() => router.push("/incidents")}>← Back</BackButton>
       {showDeleteSuccess ? (
         <SuccessMessage role="status" aria-live="polite">
           Deleted. Take care. 💙
