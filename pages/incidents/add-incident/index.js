@@ -2,23 +2,13 @@
 
 import IncidentForm from "@/components/IncidentForm/IncidentForm";
 import useSWR from "swr";
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import styled from "styled-components";
 
-export default function AddIncident() {
+export default function AddIncident({ user }) {
   const { mutate, data: incidents } = useSWR("/api/incidents");
   const router = useRouter();
-  const { status } = useSession();
-
-  if (status === "unauthenticated") {
-    router.push("/landing");
-    return null;
-  }
-
-  if (status === "loading") {
-    return null;
-  }
 
   async function handleAddIncident(incidentData) {
     const newIncident = { ...incidentData, _id: crypto.randomUUID() };
@@ -50,6 +40,22 @@ export default function AddIncident() {
   );
 }
 
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/landing",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { user: session.user },
+  };
+}
 const BackButton = styled.button`
   font-family: var(--font-family);
   font-size: 0.8rem;

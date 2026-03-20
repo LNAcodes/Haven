@@ -1,26 +1,30 @@
 // pages/index.js
-import Link from "next/link";
 import styled from "styled-components";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 
-export default function HomePage() {
-  const router = useRouter();
-  const { status } = useSession();
-
-  if (status === "unauthenticated") {
-    router.push("/landing");
-    return null;
-  }
-
-  if (status === "loading") {
-    return null;
-  }
+export default function HomePage({ user }) {
   return (
     <Main>
       <Title>Welcome to Haven</Title>
     </Main>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/landing",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { user: session.user },
+  };
 }
 
 const Main = styled.main`

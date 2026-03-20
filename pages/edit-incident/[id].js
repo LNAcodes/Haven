@@ -4,23 +4,13 @@ import IncidentForm from "@/components/IncidentForm/IncidentForm";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
-export default function EditIncidentPage() {
-  const { status } = useSession();
+export default function EditIncidentPage({ user }) {
   const router = useRouter();
   const { id } = router.query;
   const incidentUrl = id ? `/api/incidents/${id}` : null;
   const { data: incident, isLoading, error } = useSWR(incidentUrl);
-
-  if (status === "unauthenticated") {
-    router.push("/landing");
-    return null;
-  }
-
-  if (status === "loading") {
-    return null;
-  }
 
   if (isLoading || !id || !incident) {
     return (
@@ -78,6 +68,23 @@ export default function EditIncidentPage() {
       />
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/landing",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { user: session.user },
+  };
 }
 
 const FeedbackMessage = styled.p`
