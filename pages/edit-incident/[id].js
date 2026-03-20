@@ -54,7 +54,7 @@ export default function EditIncidentPage({ user }) {
   }
 
   return (
-    <>
+    <PageContainer>
       <BackButton onClick={() => router.push(`/incidents/${id}`)}>
         ← Back
       </BackButton>
@@ -66,7 +66,7 @@ export default function EditIncidentPage({ user }) {
         onCancel={() => router.push(`/incidents/${id}`)}
         cancelLabel="Cancel"
       />
-    </>
+    </PageContainer>
   );
 }
 
@@ -114,4 +114,11 @@ const PageTitle = styled.h1`
   font-family: var(--font-family);
   font-size: 1.2rem;
   color: var(--color-text);
+`;
+
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 80px;
 `;

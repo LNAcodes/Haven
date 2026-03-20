@@ -20,7 +20,7 @@ export default function IncidentDetailPage({ user }) {
   if (error) {
     return (
       <>
-        <BackButton onClick={() => router.push("/")}>← Back</BackButton>
+        <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
         <FeedbackMessage role="alert">Error loading incident.</FeedbackMessage>
       </>
     );
@@ -55,14 +55,14 @@ export default function IncidentDetailPage({ user }) {
 
     setShowDeleteSuccess(true);
     setIsDialogOpen(false);
-    setTimeout(() => router.push("/"), 2000);
+    setTimeout(() => router.push("/welcome"), 2000);
   }
 
   const date = new Date(incident.date).toLocaleDateString("en-GB");
 
   return (
     <>
-      <BackButton onClick={() => router.push("/")}>← Back</BackButton>
+      <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
       {showDeleteSuccess ? (
         <SuccessMessage role="status" aria-live="polite">
           Incident successfully deleted.
@@ -140,13 +140,17 @@ export default function IncidentDetailPage({ user }) {
         <FieldGroup>
           <FieldLabel>Created At</FieldLabel>
           <FieldValue>
-            {new Date(incident.createdAt).toLocaleDateString("en-GB")}
+            {incident.createdAt
+              ? new Date(incident.createdAt).toLocaleDateString("en-GB")
+              : "NotAvailable"}
           </FieldValue>
         </FieldGroup>
         <FieldGroup>
           <FieldLabel>Updated At</FieldLabel>
           <FieldValue>
-            {new Date(incident.updatedAt).toLocaleDateString("en-GB")}
+            {incident.updatedAt
+              ? new Date(incident.updatedAt).toLocaleDateString("en-GB")
+              : "Not available"}
           </FieldValue>
         </FieldGroup>
       </DetailPageContainer>

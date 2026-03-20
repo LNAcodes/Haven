@@ -71,6 +71,7 @@ export default function IncidentForm({
             id="time"
             required
             type="time"
+            step="60"
             defaultValue={initialData.time ?? ""}
           />
         </Field>
@@ -226,7 +227,7 @@ export default function IncidentForm({
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   padding-bottom: 24px;
 `;
 
