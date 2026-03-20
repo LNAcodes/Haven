@@ -2,27 +2,32 @@
 
 import IncidentList from "@/components/IncidentList/IncidentList";
 import styled from "styled-components";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 
-export default function IncidentsPage() {
-  const { status } = useSession();
-  const router = useRouter();
-
-  if (status === "unauthenticated") {
-    router.push("/landing");
-    return null;
-  }
-
-  if (status === "loading") {
-    return null;
-  }
+export default function IncidentsPage({ user }) {
   return (
     <>
       <IncidentListPageTitle>Documentation</IncidentListPageTitle>
       <IncidentList />
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/landing",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { user: session.user },
+  };
 }
 
 const IncidentListPageTitle = styled.h1`

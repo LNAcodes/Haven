@@ -1,27 +1,10 @@
 // pages/welcome/index.js
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 import styled from "styled-components";
 import Link from "next/link";
 
-export default function WelcomePage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  if (status === "unauthenticated") {
-    router.push("/landing");
-    return null;
-  }
-
-  if (status === "loading") {
-    return (
-      <FeedbackMessage role="status" aria-live="polite">
-        Loading...
-      </FeedbackMessage>
-    );
-  }
-
+export default function WelcomePage({ user }) {
   return (
     <WelcomeContainer>
       <Title>Welcome back</Title>
@@ -36,12 +19,22 @@ export default function WelcomePage() {
   );
 }
 
-const FeedbackMessage = styled.p`
-  font-family: var(--font-family);
-  padding: 16px;
-  text-align: center;
-  color: var(--color-text);
-`;
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/landing",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { user: session.user },
+  };
+}
 
 const WelcomeContainer = styled.div`
   display: flex;

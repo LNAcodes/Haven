@@ -1,31 +1,21 @@
 // pages/incidents/[id].js
 
 import useSWR from "swr";
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import styled from "styled-components";
 import { useState } from "react";
 import ConfirmationDialog from "@/components/ConfirmationDialog/ConfirmationDialog";
 import Link from "next/link";
 
-export default function IncidentDetailPage() {
+export default function IncidentDetailPage({ user }) {
   const router = useRouter();
-  const { status } = useSession();
   const { id } = router.query;
   const incidentUrl = id ? `/api/incidents/${id}` : null;
   const { data: incident, error, isLoading } = useSWR(incidentUrl);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
-
-  if (status === "unauthenticated") {
-    router.push("/landing");
-    return null;
-  }
-
-  if (status === "loading") {
-    return null;
-  }
 
   if (error) {
     return (
@@ -162,6 +152,23 @@ export default function IncidentDetailPage() {
       </DetailPageContainer>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/landing",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { user: session.user },
+  };
 }
 
 const DetailPageContainer = styled.main`
