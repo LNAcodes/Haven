@@ -29,8 +29,9 @@ export default function AddIncident({ user }) {
   return (
     <AddIncidentContainer>
       <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
+      <PageTitle>Add a note</PageTitle>
       <IncidentForm
-        submitLabel="Submit"
+        submitLabel="Save"
         onSubmit={handleAddIncident}
         cancelLabel="Cancel"
         onCancel={() => router.push("/welcome")}
@@ -76,4 +77,11 @@ const AddIncidentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+`;
+
+const PageTitle = styled.h1`
+  font-family: var(--font-family);
+  font-size: 1.2rem;
+  color: var(--color-text);
+  text-align: center;
 `;

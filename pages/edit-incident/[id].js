@@ -58,7 +58,7 @@ export default function EditIncidentPage({ user }) {
       <BackButton onClick={() => router.push(`/incidents/${id}`)}>
         ← Back
       </BackButton>
-      <PageTitle>Edit Incident</PageTitle>
+      <PageTitle>Make Changes</PageTitle>
       <IncidentForm
         initialData={initialData}
         onSubmit={handleEditIncident}
@@ -114,6 +114,7 @@ const PageTitle = styled.h1`
   font-family: var(--font-family);
   font-size: 1.2rem;
   color: var(--color-text);
+  text-align: center;
 `;
 
 const PageContainer = styled.div`

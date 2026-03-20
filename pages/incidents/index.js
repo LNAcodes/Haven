@@ -7,7 +7,7 @@ import { getSession } from "next-auth/react";
 export default function IncidentsPage({ user }) {
   return (
     <IncidentsContainer>
-      <IncidentListPageTitle>Documentation</IncidentListPageTitle>
+      <IncidentListPageTitle>Overview</IncidentListPageTitle>
       <IncidentList />
     </IncidentsContainer>
   );

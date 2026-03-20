@@ -65,7 +65,7 @@ export default function IncidentDetailPage({ user }) {
       <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
       {showDeleteSuccess ? (
         <SuccessMessage role="status" aria-live="polite">
-          Incident successfully deleted.
+          Deleted. Take care. 💙
         </SuccessMessage>
       ) : null}
       <DetailPageContainer $severity={incident.severity}>

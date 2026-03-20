@@ -41,7 +41,7 @@ export default function IncidentForm({
       <Form data-js="incidentForm" onSubmit={handleSubmit}>
         {showSuccess ? (
           <SuccessMessage role="status" aria-live="polite">
-            Incident documented successfully!
+            Saved! You did it. 💙
           </SuccessMessage>
         ) : null}
 
