@@ -27,7 +27,7 @@ export default function AddIncident({ user }) {
     setTimeout(() => router.push("/welcome"), 2500);
   }
   return (
-    <>
+    <AddIncidentContainer>
       <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
       <IncidentForm
         submitLabel="Submit"
@@ -36,7 +36,7 @@ export default function AddIncident({ user }) {
         onCancel={() => router.push("/welcome")}
         resetOnSuccess
       />
-    </>
+    </AddIncidentContainer>
   );
 }
 
@@ -70,4 +70,10 @@ const BackButton = styled.button`
   display: flex;
   align-items: center;
   width: fit-content;
+`;
+
+const AddIncidentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 `;

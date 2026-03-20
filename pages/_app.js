@@ -5,6 +5,7 @@ import { SWRConfig } from "swr";
 import styled from "styled-components";
 import Footer from "@/components/Footer/Footer";
 import { SessionProvider } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const fetcher = async (url) => {
   const fetchResponse = await fetch(url);
@@ -21,6 +22,9 @@ const fetcher = async (url) => {
 };
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+  const isLandingPage = router.pathname === "/landing";
+
   return (
     <SessionProvider session={pageProps.session}>
       <Wrapper>
@@ -30,7 +34,7 @@ export default function App({ Component, pageProps }) {
             <Main>
               <Component {...pageProps} />
             </Main>
-            <Footer />
+            {!isLandingPage && <Footer />}
           </PageContainer>
         </SWRConfig>
       </Wrapper>

@@ -61,7 +61,7 @@ export default function IncidentDetailPage({ user }) {
   const date = new Date(incident.date).toLocaleDateString("en-GB");
 
   return (
-    <>
+    <DetailWrapper>
       <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
       {showDeleteSuccess ? (
         <SuccessMessage role="status" aria-live="polite">
@@ -154,7 +154,7 @@ export default function IncidentDetailPage({ user }) {
           </FieldValue>
         </FieldGroup>
       </DetailPageContainer>
-    </>
+    </DetailWrapper>
   );
 }
 
@@ -181,7 +181,6 @@ const DetailPageContainer = styled.main`
   padding: 24px 24px 24px 32px;
   display: flex;
   flex-direction: column;
-  padding-bottom: 24px;
   gap: 16px;
   border-left: 8px solid
     ${({ $severity }) => {
@@ -278,4 +277,11 @@ const ButtonGroup = styled.div`
   display: flex;
   gap: 8px;
   align-self: flex-end;
+`;
+
+const DetailWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 24px;
 `;
