@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import ConfirmationDialog from "@/components/ConfirmationDialog/ConfirmationDialog";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function IncidentDetailPage({ user }) {
   const router = useRouter();
@@ -70,13 +72,15 @@ export default function IncidentDetailPage({ user }) {
       ) : null}
       <DetailPageContainer $severity={incident.severity}>
         <ButtonGroup>
-          <EditLink href={`/edit-incident/${id}`}>✏️</EditLink>
+          <EditLink href={`/edit-incident/${id}`}>
+            <FontAwesomeIcon icon={faPen} />
+          </EditLink>
 
           <DeleteButton
             onClick={() => setIsDialogOpen(true)}
             disabled={isDeleting}
           >
-            {isDeleting ? "Deleting ..." : "🗑️"}
+            {isDeleting ? "Deleting ..." : <FontAwesomeIcon icon={faTrash} />}
           </DeleteButton>
         </ButtonGroup>
         {isDialogOpen ? (
@@ -241,7 +245,7 @@ const DeleteButton = styled.button`
   min-height: 44px;
   padding: 0 16px;
   background-color: var(--color-background);
-  color: var(--color-button-text);
+  color: var(--color-text);
   border: none;
   border-radius: 4px;
   cursor: pointer;
