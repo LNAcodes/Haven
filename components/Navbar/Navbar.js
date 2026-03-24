@@ -10,6 +10,7 @@ import {
   faPlus,
   faList,
   faRightFromBracket,
+  faHandHoldingHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
@@ -67,6 +68,20 @@ export default function Navbar() {
               <FontAwesomeIcon icon={faList} />
             </NavIcon>
             <NavLabel>List</NavLabel>
+          </NavLink>
+        </NavItem>
+
+        <NavItem>
+          <NavLink
+            href="/info"
+            aria-label="Help & Support"
+            aria-current={isActive("/info") ? "page" : undefined}
+            $active={isActive("/info")}
+          >
+            <NavIcon>
+              <FontAwesomeIcon icon={faHandHoldingHeart} />
+            </NavIcon>
+            <NavLabel>Info</NavLabel>
           </NavLink>
         </NavItem>
 
