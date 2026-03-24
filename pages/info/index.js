@@ -71,26 +71,6 @@ export default function InfoPage({ user }) {
         <SectionTitle>Online Help</SectionTitle>
         <ResourceList>
           <ResourceItem>
-            <ResourceName>jugendnotmail.de</ResourceName>
-            <EmergencyInfoBox>
-              Online counseling for young people
-            </EmergencyInfoBox>
-            <CallButton href="https://www.jugendnotmail.de" target="_blank">
-              <FontAwesomeIcon icon={faGlobe} />
-              Open website
-            </CallButton>
-          </ResourceItem>
-          <ResourceItem>
-            <ResourceName>bke-jugendberatung.de</ResourceName>
-            <EmergencyInfoBox>Online counseling, anonymous</EmergencyInfoBox>
-            <CallButton
-              href="https://www.bke-jugendberatung.de"
-              target="_blank"
-            >
-              <FontAwesomeIcon icon={faGlobe} /> Open website
-            </CallButton>
-          </ResourceItem>
-          <ResourceItem>
             <ResourceName>juuuport.de</ResourceName>
             <EmergencyInfoBox>
               Peer-to-peer counseling by young people
@@ -100,6 +80,27 @@ export default function InfoPage({ user }) {
             </CallButton>
           </ResourceItem>
         </ResourceList>
+        <ResourceItem>
+          <ResourceName>Bündnis gegen Cybermobbing</ResourceName>
+          <EmergencyInfoBox>
+            Support and information about cyberbullying
+          </EmergencyInfoBox>
+          <CallButton
+            href="https://www.buendnis-gegen-cybermobbing.de"
+            target="_blank"
+          >
+            <FontAwesomeIcon icon={faGlobe} /> Open website
+          </CallButton>
+        </ResourceItem>
+        <ResourceItem>
+          <ResourceName>klicksafe.de</ResourceName>
+          <EmergencyInfoBox>
+            Information about safe internet use and cyberbullying
+          </EmergencyInfoBox>
+          <CallButton href="https://www.klicksafe.de" target="_blank">
+            <FontAwesomeIcon icon={faGlobe} /> Open website
+          </CallButton>
+        </ResourceItem>
       </InfoSection>
 
       <YouAreNotAloneSection>
