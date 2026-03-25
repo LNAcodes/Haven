@@ -14,7 +14,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function InfoPage({ user }) {
   return (
     <InfoContainer>
-      <InfoPageTitle>Help & Support</InfoPageTitle>
+      <InfoHeader>
+        <InfoPageTitle>Help & Support</InfoPageTitle>
+      </InfoHeader>
       <YouAreNotAloneSection>
         <SectionTitle>We are here for you.</SectionTitle>
         <EmergencyInfoBox>
@@ -142,7 +144,7 @@ const InfoContainer = styled.div`
 const InfoPageTitle = styled.h1`
   font-family: var(--font-family);
   font-size: 1.5rem;
-  color: var(--color-accent);
+  color: var(--color-button-text);
   text-align: center;
 `;
 
@@ -198,7 +200,7 @@ const YouAreNotAloneSection = styled.div`
   background-color: var(--color-severity-low);
   padding: 24px 16px;
   text-align: center;
-  margin: 0 -24px;
+  margin: -24px -24px 0 -24px;
 `;
 
 const ButtonRow = styled.div`
@@ -238,4 +240,12 @@ const BelieveYouText = styled.h2`
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
   text-align: center;
+`;
+
+const InfoHeader = styled.div`
+  background-color: var(--color-severity-critical);
+  padding: 48px 24px;
+  text-align: center;
+  margin: 0 -24px;
+  margin-top: -24px;
 `;
