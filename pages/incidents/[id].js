@@ -22,7 +22,7 @@ export default function IncidentDetailPage({ user }) {
   if (error) {
     return (
       <>
-        <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
+        <BackButton onClick={() => router.push("/")}>← Back</BackButton>
         <FeedbackMessage role="alert">Error loading incident.</FeedbackMessage>
       </>
     );

@@ -15,7 +15,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
 
   if (status === "authenticated") {
-    router.push("/welcome");
+    router.push("/");
     return null;
   }
 
