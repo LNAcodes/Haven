@@ -12,6 +12,7 @@ import {
   faRightFromBracket,
   faHandHoldingHeart,
 } from "@fortawesome/free-solid-svg-icons";
+import Button from "@/components/ui/Button";
 
 export default function Navbar() {
   const router = useRouter();
@@ -87,12 +88,15 @@ export default function Navbar() {
 
         {status === "authenticated" ? (
           <NavItem>
-            <NavButton
+            <Button
+              variant="icon"
               onClick={() => signOut({ callbackUrl: "/login" })}
               aria-label="Logout"
             >
-              <FontAwesomeIcon icon={faRightFromBracket} />
-            </NavButton>
+              <NavIcon>
+                <FontAwesomeIcon icon={faRightFromBracket} />
+              </NavIcon>
+            </Button>
           </NavItem>
         ) : null}
       </NavList>
@@ -159,15 +163,13 @@ const NavLabel = styled.span`
   border: 0;
 `;
 
-const NavButton = styled.button`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+const NavIconButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
-  font-family: var(--font-family);
-  color: var(--color-accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 4px;
+  border-bottom: 3px solid transparent;
 `;

@@ -5,6 +5,8 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { getSession } from "next-auth/react";
+import Button from "@/components/ui/Button";
+import Message from "@/components/ui/Message";
 
 export default function EditIncidentPage({ user }) {
   const router = useRouter();
@@ -13,20 +15,16 @@ export default function EditIncidentPage({ user }) {
   const { data: incident, isLoading, error } = useSWR(incidentUrl);
 
   if (isLoading || !id || !incident) {
-    return (
-      <FeedbackMessage role="status" aria-live="polite">
-        Loading incident...
-      </FeedbackMessage>
-    );
+    return <Message type="info">Loading incident...</Message>;
   }
 
   if (error) {
     return (
       <>
-        <BackButton onClick={() => router.push(`/incidents/${id}`)}>
+        <Button variant="back" onClick={() => router.push(`/incidents/${id}`)}>
           ← Back
-        </BackButton>
-        <FeedbackMessage role="alert">Incident not found.</FeedbackMessage>
+        </Button>
+        <Message type="error">Incident not found.</Message>
       </>
     );
   }
@@ -55,9 +53,9 @@ export default function EditIncidentPage({ user }) {
 
   return (
     <PageContainer>
-      <BackButton onClick={() => router.push(`/incidents/${id}`)}>
+      <Button variant="back" onClick={() => router.push(`/incidents/${id}`)}>
         ← Back
-      </BackButton>
+      </Button>
       <PageTitle>Make Changes</PageTitle>
       <IncidentForm
         initialData={initialData}
@@ -86,29 +84,6 @@ export async function getServerSideProps(context) {
     props: { user: session.user },
   };
 }
-
-const FeedbackMessage = styled.p`
-  font-family: var(--font-family);
-  padding: 16px;
-  text-align: center;
-  color: var(--color-text);
-`;
-
-const BackButton = styled.button`
-  font-family: var(--font-family);
-  font-size: 0.8rem;
-  font-weight: var(--font-weight-medium);
-  min-height: 44px;
-  padding: 0 16px;
-  background-color: var(--color-accent);
-  color: var(--color-button-text);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  width: fit-content;
-`;
 
 const PageTitle = styled.h1`
   font-family: var(--font-family);
