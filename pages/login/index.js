@@ -1,4 +1,4 @@
-// pages/landing/index.js
+// pages/login/index.js
 
 import { useRouter } from "next/router";
 import { useSession, signIn } from "next-auth/react";
@@ -7,7 +7,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
-export default function LandingPage() {
+export default function LoginPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [showForm, setShowForm] = useState(false);

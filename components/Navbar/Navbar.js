@@ -88,7 +88,7 @@ export default function Navbar() {
         {status === "authenticated" ? (
           <NavItem>
             <NavButton
-              onClick={() => signOut({ callbackUrl: "/landing" })}
+              onClick={() => signOut({ callbackUrl: "/login" })}
               aria-label="Logout"
             >
               <FontAwesomeIcon icon={faRightFromBracket} />
