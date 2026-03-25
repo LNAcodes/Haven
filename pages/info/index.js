@@ -15,14 +15,13 @@ export default function InfoPage({ user }) {
   return (
     <InfoContainer>
       <InfoPageTitle>Help & Support</InfoPageTitle>
-
       <YouAreNotAloneSection>
-        <SectionTitle>You are not alone.</SectionTitle>
+        <SectionTitle>We are here for you.</SectionTitle>
         <EmergencyInfoBox>
-          What happened to you is not okay, and it is not your fault. You
-          deserve support. Talking to a trusted adult — a teacher, family
-          member, or counselor — can make a real difference.
+          If something happened to you — whether online or in person — you
+          deserve to be heard and supported. Reach out.
         </EmergencyInfoBox>
+        <BelieveYouText>We believe you.</BelieveYouText>
       </YouAreNotAloneSection>
 
       <InfoSection>
@@ -102,14 +101,13 @@ export default function InfoPage({ user }) {
           </CallButton>
         </ResourceItem>
       </InfoSection>
-
       <YouAreNotAloneSection>
-        <SectionTitle>We are here for you.</SectionTitle>
+        <SectionTitle>You are not alone.</SectionTitle>
         <EmergencyInfoBox>
-          If something happened to you — whether online or in person — you
-          deserve to be heard and supported. Reach out.
+          What happened to you is not okay, and it is not your fault. You
+          deserve support. Talking to a trusted adult — a teacher, family
+          member, or counselor — can make a real difference.
         </EmergencyInfoBox>
-        <BelieveYouText>We believe you.</BelieveYouText>
       </YouAreNotAloneSection>
     </InfoContainer>
   );
