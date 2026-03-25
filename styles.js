@@ -13,10 +13,10 @@ export default createGlobalStyle`
     --color-success-bg: #d8f3dc;
     --color-error: #92400e;
     --color-error-bg: #fef3c7;
-    --color-severity-low: #52b788;
-    --color-severity-medium: #e0a800;
+    --color-severity-low: #c5cce8;
+    --color-severity-medium: #8d97c9;
     --color-severity-high: #5b6bb5;
-    --color-severity-critical: #6d326d;
+    --color-severity-critical: #2d3a7a;
     --font-family: 'Inter', system-ui, sans-serif;
     --font-weight-regular: 400;
     --font-weight-medium: 500;

@@ -76,7 +76,7 @@ export default function InfoPage({ user }) {
               Peer-to-peer counseling by young people
             </EmergencyInfoBox>
             <CallButton href="https://www.juuuport.de" target="_blank">
-              <FontAwesomeIcon icon={faGlobe} /> Open website
+              <FontAwesomeIcon icon={faGlobe} /> juuuport.de
             </CallButton>
           </ResourceItem>
         </ResourceList>
@@ -89,7 +89,7 @@ export default function InfoPage({ user }) {
             href="https://www.buendnis-gegen-cybermobbing.de"
             target="_blank"
           >
-            <FontAwesomeIcon icon={faGlobe} /> Open website
+            <FontAwesomeIcon icon={faGlobe} /> buendnis-gegen-cybermobbing.de
           </CallButton>
         </ResourceItem>
         <ResourceItem>
@@ -98,7 +98,7 @@ export default function InfoPage({ user }) {
             Information about safe internet use and cyberbullying
           </EmergencyInfoBox>
           <CallButton href="https://www.klicksafe.de" target="_blank">
-            <FontAwesomeIcon icon={faGlobe} /> Open website
+            <FontAwesomeIcon icon={faGlobe} /> klicksafe.de
           </CallButton>
         </ResourceItem>
       </InfoSection>
@@ -192,13 +192,12 @@ const EmergencyInfoBox = styled.p`
   font-family: var(--font-family);
   font-size: 0.9rem;
   font-weight: var(--font-weight-semibold);
-
   color: var(--color-text);
   text-align: center;
 `;
 
 const YouAreNotAloneSection = styled.div`
-  background-color: var(--color-success-bg);
+  background-color: var(--color-severity-low);
   padding: 24px 16px;
   text-align: center;
   margin: 0 -24px;
