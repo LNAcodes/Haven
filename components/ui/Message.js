@@ -1,4 +1,4 @@
-// components/ui/message.js
+// components/ui/Message.js
 
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
