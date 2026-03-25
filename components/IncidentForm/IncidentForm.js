@@ -163,6 +163,25 @@ export default function IncidentForm({
           </Select>
         </Field>
 
+        <LegendContainer>
+          <LegendItem>
+            <LegendDot $severity="low" />
+            <LegendText>Low — Minor incidents</LegendText>
+          </LegendItem>
+          <LegendItem>
+            <LegendDot $severity="medium" />
+            <LegendText>Medium — Concerning incidents</LegendText>
+          </LegendItem>
+          <LegendItem>
+            <LegendDot $severity="high" />
+            <LegendText>High — Serious incidents</LegendText>
+          </LegendItem>
+          <LegendItem>
+            <LegendDot $severity="critical" />
+            <LegendText>Critical — Very serious incidents</LegendText>
+          </LegendItem>
+        </LegendContainer>
+
         <Field>
           <Label htmlFor="description">
             Description <Required>*</Required>
@@ -342,4 +361,36 @@ const ErrorMessage = styled.p`
   background-color: var(--color-error-bg);
   padding: 8px 12px;
   border-radius: 4px;
+`;
+
+const LegendContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const LegendItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const LegendDot = styled.span`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: ${({ $severity }) => {
+    if ($severity === "low") return "var(--color-severity-low)";
+    if ($severity === "medium") return "var(--color-severity-medium)";
+    if ($severity === "high") return "var(--color-severity-high)";
+    if ($severity === "critical") return "var(--color-severity-critical)";
+  }};
+`;
+
+const LegendText = styled.span`
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  color: var(--color-text);
 `;

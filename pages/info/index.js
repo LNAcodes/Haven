@@ -14,15 +14,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function InfoPage({ user }) {
   return (
     <InfoContainer>
-      <InfoPageTitle>Help & Support</InfoPageTitle>
-
+      <InfoHeader>
+        <InfoPageTitle>Help & Support</InfoPageTitle>
+      </InfoHeader>
       <YouAreNotAloneSection>
-        <SectionTitle>You are not alone.</SectionTitle>
+        <SectionTitle>We are here for you.</SectionTitle>
         <EmergencyInfoBox>
-          What happened to you is not okay, and it is not your fault. You
-          deserve support. Talking to a trusted adult — a teacher, family
-          member, or counselor — can make a real difference.
+          If something happened to you — whether online or in person — you
+          deserve to be heard and supported. Reach out.
         </EmergencyInfoBox>
+        <BelieveYouText>We believe you.</BelieveYouText>
       </YouAreNotAloneSection>
 
       <InfoSection>
@@ -76,7 +77,7 @@ export default function InfoPage({ user }) {
               Peer-to-peer counseling by young people
             </EmergencyInfoBox>
             <CallButton href="https://www.juuuport.de" target="_blank">
-              <FontAwesomeIcon icon={faGlobe} /> Open website
+              <FontAwesomeIcon icon={faGlobe} /> juuuport.de
             </CallButton>
           </ResourceItem>
         </ResourceList>
@@ -89,7 +90,7 @@ export default function InfoPage({ user }) {
             href="https://www.buendnis-gegen-cybermobbing.de"
             target="_blank"
           >
-            <FontAwesomeIcon icon={faGlobe} /> Open website
+            <FontAwesomeIcon icon={faGlobe} /> buendnis-gegen-cybermobbing.de
           </CallButton>
         </ResourceItem>
         <ResourceItem>
@@ -98,18 +99,17 @@ export default function InfoPage({ user }) {
             Information about safe internet use and cyberbullying
           </EmergencyInfoBox>
           <CallButton href="https://www.klicksafe.de" target="_blank">
-            <FontAwesomeIcon icon={faGlobe} /> Open website
+            <FontAwesomeIcon icon={faGlobe} /> klicksafe.de
           </CallButton>
         </ResourceItem>
       </InfoSection>
-
       <YouAreNotAloneSection>
-        <SectionTitle>We are here for you.</SectionTitle>
+        <SectionTitle>You are not alone.</SectionTitle>
         <EmergencyInfoBox>
-          If something happened to you — whether online or in person — you
-          deserve to be heard and supported. Reach out.
+          What happened to you is not okay, and it is not your fault. You
+          deserve support. Talking to a trusted adult — a teacher, family
+          member, or counselor — can make a real difference.
         </EmergencyInfoBox>
-        <BelieveYouText>We believe you.</BelieveYouText>
       </YouAreNotAloneSection>
     </InfoContainer>
   );
@@ -144,7 +144,7 @@ const InfoContainer = styled.div`
 const InfoPageTitle = styled.h1`
   font-family: var(--font-family);
   font-size: 1.5rem;
-  color: var(--color-accent);
+  color: var(--color-button-text);
   text-align: center;
 `;
 
@@ -192,16 +192,15 @@ const EmergencyInfoBox = styled.p`
   font-family: var(--font-family);
   font-size: 0.9rem;
   font-weight: var(--font-weight-semibold);
-
   color: var(--color-text);
   text-align: center;
 `;
 
 const YouAreNotAloneSection = styled.div`
-  background-color: var(--color-success-bg);
+  background-color: var(--color-severity-low);
   padding: 24px 16px;
   text-align: center;
-  margin: 0 -24px;
+  margin: -24px -24px 0 -24px;
 `;
 
 const ButtonRow = styled.div`
@@ -241,4 +240,12 @@ const BelieveYouText = styled.h2`
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
   text-align: center;
+`;
+
+const InfoHeader = styled.div`
+  background-color: var(--color-severity-critical);
+  padding: 48px 24px;
+  text-align: center;
+  margin: 0 -24px;
+  margin-top: -24px;
 `;
