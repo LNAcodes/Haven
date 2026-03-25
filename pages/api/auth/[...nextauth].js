@@ -38,7 +38,7 @@ export const authOptions = {
     }),
   ],
   pages: {
-    signIn: "/landing",
+    signIn: "/login",
   },
   callbacks: {
     async redirect({ url, baseUrl }) {

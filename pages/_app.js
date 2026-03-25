@@ -23,7 +23,7 @@ const fetcher = async (url) => {
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
-  const isLandingPage = router.pathname === "/landing";
+  const isLandingPage = router.pathname === "/login";
 
   return (
     <SessionProvider session={pageProps.session}>
