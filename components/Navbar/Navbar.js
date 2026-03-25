@@ -19,7 +19,7 @@ export default function Navbar() {
   const path = router.pathname;
 
   const isActive = (href) => {
-    if (href === "/welcome") return path === "/welcome";
+    if (href === "/") return path === "/";
     if (href === "/incidents") return path === "/incidents";
     return path === href;
   };
@@ -29,10 +29,10 @@ export default function Navbar() {
       <NavList>
         <NavItem>
           <NavLink
-            href="/welcome"
+            href="/"
             aria-label="Go to home"
-            aria-current={isActive("/welcome") ? "page" : undefined}
-            $active={isActive("/welcome")}
+            aria-current={isActive("/") ? "page" : undefined}
+            $active={isActive("/")}
           >
             <NavIcon>
               <FontAwesomeIcon icon={faHouse} />

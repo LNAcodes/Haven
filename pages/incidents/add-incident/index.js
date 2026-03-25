@@ -24,17 +24,17 @@ export default function AddIncident({ user }) {
       throw new Error("Could not save new incident.");
     }
     await mutate();
-    setTimeout(() => router.push("/welcome"), 2500);
+    setTimeout(() => router.push("/"), 2500);
   }
   return (
     <AddIncidentContainer>
-      <BackButton onClick={() => router.push("/welcome")}>← Back</BackButton>
+      <BackButton onClick={() => router.push("/")}>← Back</BackButton>
       <PageTitle>Add a note</PageTitle>
       <IncidentForm
         submitLabel="Save"
         onSubmit={handleAddIncident}
         cancelLabel="Cancel"
-        onCancel={() => router.push("/welcome")}
+        onCancel={() => router.push("/")}
         resetOnSuccess
       />
     </AddIncidentContainer>
