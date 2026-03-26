@@ -23,7 +23,7 @@ const fetcher = async (url) => {
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
-  const isLandingPage = router.pathname === "/login";
+  const isLoginPage = router.pathname === "/login";
 
   return (
     <SessionProvider session={pageProps.session}>
@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }) {
             <Main>
               <Component {...pageProps} />
             </Main>
-            {!isLandingPage && <Footer />}
+            {!isLoginPage && <Footer />}
           </PageContainer>
         </SWRConfig>
       </Wrapper>

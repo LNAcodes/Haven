@@ -5,10 +5,12 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState } from "react";
-import ConfirmationDialog from "@/components/ConfirmationDialog/ConfirmationDialog";
+import Dialog from "@/components/ui/Dialog";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Message from "@/components/ui/Message";
+import Button from "@/components/ui/Button";
 
 export default function IncidentDetailPage({ user }) {
   const router = useRouter();
@@ -22,26 +24,20 @@ export default function IncidentDetailPage({ user }) {
   if (error) {
     return (
       <>
-        <BackButton onClick={() => router.push("/")}>← Back</BackButton>
-        <FeedbackMessage role="alert">Error loading incident.</FeedbackMessage>
+        <Button variant="back" onClick={() => router.push("/")}>
+          ← Back
+        </Button>
+        <Message type="error">Error loading incident.</Message>
       </>
     );
   }
 
   if (isLoading || !id || !incident) {
-    return (
-      <FeedbackMessage role="status" aria-live="polite">
-        Loading incident... Please wait...
-      </FeedbackMessage>
-    );
+    return <Message type="info">Loading incident... Please wait...</Message>;
   }
 
   if (!incident) {
-    return (
-      <FeedbackMessage role="status" aria-live="polite">
-        Incident not found.
-      </FeedbackMessage>
-    );
+    return <Message type="info">Incident not found.</Message>;
   }
 
   async function handleDelete() {
@@ -64,11 +60,17 @@ export default function IncidentDetailPage({ user }) {
 
   return (
     <DetailWrapper>
-      <BackButton onClick={() => router.push("/incidents")}>← Back</BackButton>
+      <Button variant="back" onClick={() => router.push("/incidents")}>
+        ← Back
+      </Button>
       {showDeleteSuccess ? (
-        <SuccessMessage role="status" aria-live="polite">
+        <Message
+          type="success"
+          dismissible
+          onClose={() => setShowDeleteSuccess(false)}
+        >
           Deleted. Take care. 💙
-        </SuccessMessage>
+        </Message>
       ) : null}
       <DetailPageContainer $severity={incident.severity}>
         <ButtonGroup>
@@ -76,19 +78,22 @@ export default function IncidentDetailPage({ user }) {
             <FontAwesomeIcon icon={faPen} />
           </EditLink>
 
-          <DeleteButton
+          <Button
+            variant="delete"
             onClick={() => setIsDialogOpen(true)}
             disabled={isDeleting}
           >
             {isDeleting ? "Deleting ..." : <FontAwesomeIcon icon={faTrash} />}
-          </DeleteButton>
+          </Button>
         </ButtonGroup>
-        {isDialogOpen ? (
-          <ConfirmationDialog
-            onConfirm={handleDelete}
-            onCancel={() => setIsDialogOpen(false)}
-          />
-        ) : null}
+        <Dialog
+          showDialog={isDialogOpen}
+          onConfirm={handleDelete}
+          onCancel={() => setIsDialogOpen(false)}
+          message="Delete this incident? This cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+        />
         <FieldGroup>
           <FieldLabel>Date</FieldLabel>
           <FieldValue>{date}</FieldValue>
@@ -214,52 +219,6 @@ const FieldValue = styled.span`
   font-family: var(--font-family);
   font-size: 1rem;
   color: var(--color-text);
-`;
-
-const FeedbackMessage = styled.p`
-  font-family: var(--font-family);
-  padding: 16px;
-  text-align: center;
-  color: var(--color-text);
-`;
-
-const BackButton = styled.button`
-  font-family: var(--font-family);
-  font-size: 0.8rem;
-  font-weight: var(--font-weight-medium);
-  min-height: 44px;
-  padding: 0 16px;
-  background-color: var(--color-accent);
-  color: var(--color-button-text);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  width: fit-content;
-`;
-
-const DeleteButton = styled.button`
-  font-family: var(--font-family);
-  font-size: 0.9rem;
-  min-height: 44px;
-  padding: 0 16px;
-  background-color: var(--color-background);
-  color: var(--color-text);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: fit-content;
-  align-self: flex-end;
-`;
-
-const SuccessMessage = styled.p`
-  font-family: var(--font-family);
-  color: var(--color-success);
-  background-color: var(--color-success-bg);
-  padding: 8px 12px;
-  border-radius: 4px;
-  text-align: center;
 `;
 
 const EditLink = styled(Link)`

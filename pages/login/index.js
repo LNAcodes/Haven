@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import Button from "@/components/ui/Button";
 
 export default function LoginPage() {
   const { data: session, status } = useSession();
@@ -23,39 +24,44 @@ export default function LoginPage() {
     <LPContainer>
       <Title>Haven</Title>
       <DescreetMessage>A place just for you.</DescreetMessage>
-      <LoginButton onClick={() => signIn("github")}>
-        <FontAwesomeIcon icon={faGithub} />
-        Login with Github
-      </LoginButton>
-      <TestButton onClick={() => setShowForm(true)}>
-        Login for Testing
-      </TestButton>
+      <ButtonContainer>
+        <Button variant="action" fullWidth onClick={() => signIn("github")}>
+          <FontAwesomeIcon icon={faGithub} />
+          Login with Github
+        </Button>
+        <Button variant="testing" fullWidth onClick={() => setShowForm(true)}>
+          Login for Testing
+        </Button>
 
-      {showForm ? (
-        <CredentialsForm
-          onSubmit={(event) => {
-            event.preventDefault();
-            signIn("credentials", { username, password });
-          }}
-        >
-          <Input
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-            placeholder="username"
-          />
-          <Input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="password"
-          />
-          <LoginButton
-            onClick={() => signIn("credentials", { username, password })}
+        {showForm ? (
+          <CredentialsForm
+            onSubmit={(event) => {
+              event.preventDefault();
+              signIn("credentials", { username, password });
+            }}
           >
-            Submit
-          </LoginButton>
-        </CredentialsForm>
-      ) : null}
+            <Input
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              placeholder="username"
+            />
+            <Input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="password"
+            />
+            <Button
+              variant="action"
+              type="submit"
+              fullWidth
+              onClick={() => signIn("credentials", { username, password })}
+            >
+              Submit
+            </Button>
+          </CredentialsForm>
+        ) : null}
+      </ButtonContainer>
     </LPContainer>
   );
 }
@@ -84,37 +90,6 @@ const DescreetMessage = styled.p`
   text-align: center;
 `;
 
-const LoginButton = styled.button`
-  font-family: var(--font-family);
-  font-size: 1rem;
-  font-weight: var(--font-weight-medium);
-  min-height: 48px;
-  width: 100%;
-  max-width: 300px;
-  background-color: var(--color-primary);
-  color: var(--color-text);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-`;
-
-const TestButton = styled.button`
-  font-family: var(--font-family);
-  font-size: 0.85rem;
-  min-height: 44px;
-  width: 100%;
-  max-width: 300px;
-  background-color: transparent;
-  color: var(--color-accent);
-  border: 1px solid var(--color-accent);
-  border-radius: 4px;
-  cursor: pointer;
-`;
-
 const Input = styled.input`
   font-family: var(--font-family);
   font-size: 1rem;
@@ -136,4 +111,12 @@ const CredentialsForm = styled.form`
   width: 100%;
   max-width: 300px;
   align-items: center;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 300px;
 `;

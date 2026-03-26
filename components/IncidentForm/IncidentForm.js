@@ -2,6 +2,8 @@
 
 import styled from "styled-components";
 import { useState } from "react";
+import Message from "@/components/ui/Message";
+import Button from "@/components/ui/Button";
 
 export default function IncidentForm({
   initialData = {},
@@ -40,13 +42,19 @@ export default function IncidentForm({
     <PageContainer>
       <Form data-js="incidentForm" onSubmit={handleSubmit}>
         {showSuccess ? (
-          <SuccessMessage role="status" aria-live="polite">
+          <Message
+            type="success"
+            dismissible
+            onClose={() => setShowSuccess(false)}
+          >
             Saved! You did it. 💙
-          </SuccessMessage>
+          </Message>
         ) : null}
 
         {submitError ? (
-          <ErrorMessage role="alert">{submitError}</ErrorMessage>
+          <Message type="error" dismissible onClose={() => setSubmitError("")}>
+            {submitError}
+          </Message>
         ) : null}
 
         <Field>
@@ -224,19 +232,21 @@ export default function IncidentForm({
           />
         </Field>
 
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting} fullWidth>
           {submitLabel}
         </Button>
 
         {onCancel && (
-          <CancelButton
+          <Button
             type="button"
+            variant="back"
             onClick={onCancel}
             disabled={isSubmitting}
             aria-label="Cancel"
+            fullWidth
           >
             {cancelLabel}
-          </CancelButton>
+          </Button>
         )}
       </Form>
     </PageContainer>
@@ -322,45 +332,11 @@ const Select = styled.select`
   }
 `;
 
-const Button = styled.button`
-  font-family: var(--font-family);
-  font-size: 1rem;
-  font-weight: var(--font-weight-medium);
-  min-height: 48px;
-  width: 100%;
-  background-color: var(--color-primary);
-  color: var(--color-text);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
-
-const CancelButton = styled(Button)`
-  background-color: var(--color-accent);
-  color: var(--color-button-text);
-`;
-
 const Hint = styled.p`
   font-family: var(--font-family);
   font-size: 0.8rem;
   color: var(--color-accent);
   margin: 0;
-`;
-
-const SuccessMessage = styled.p`
-  font-family: var(--font-family);
-  color: var(--color-success);
-  background-color: var(--color-success-bg);
-  padding: 8px 12px;
-  border-radius: 4px;
-`;
-
-const ErrorMessage = styled.p`
-  font-family: var(--font-family);
-  color: var(--color-error);
-  background-color: var(--color-error-bg);
-  padding: 8px 12px;
-  border-radius: 4px;
 `;
 
 const LegendContainer = styled.div`
