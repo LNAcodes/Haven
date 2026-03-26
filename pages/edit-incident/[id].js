@@ -1,4 +1,4 @@
-// pages/edit-incidents/[id].js
+// pages/edit-incident/[id].js
 
 import IncidentForm from "@/components/IncidentForm/IncidentForm";
 import useSWR from "swr";
@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { getSession } from "next-auth/react";
 import Button from "@/components/ui/Button";
 import Message from "@/components/ui/Message";
+import PageHeader from "@/components/ui/PageHeader";
 
 export default function EditIncidentPage({ user }) {
   const router = useRouter();
@@ -53,10 +54,10 @@ export default function EditIncidentPage({ user }) {
 
   return (
     <PageContainer>
+      <PageHeader>Make Changes</PageHeader>
       <Button variant="back" onClick={() => router.push(`/incidents/${id}`)}>
         ← Back
       </Button>
-      <PageTitle>Make Changes</PageTitle>
       <IncidentForm
         initialData={initialData}
         onSubmit={handleEditIncident}
@@ -84,13 +85,6 @@ export async function getServerSideProps(context) {
     props: { user: session.user },
   };
 }
-
-const PageTitle = styled.h1`
-  font-family: var(--font-family);
-  font-size: 1.2rem;
-  color: var(--color-text);
-  text-align: center;
-`;
 
 const PageContainer = styled.div`
   display: flex;

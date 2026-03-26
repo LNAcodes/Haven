@@ -49,7 +49,7 @@ const StyledButton = styled.button`
   background-color: ${({ $variant }) => {
     if ($variant === "action") return "var(--color-primary)";
     if ($variant === "back") return "var(--color-accent)";
-    if ($variant === "delete") return "var(--color-error)";
+    if ($variant === "delete") return "var(--color-background)";
     if ($variant === "icon") return "transparent";
     if ($variant === "testing") return "transparent";
     return "var(--color-primary)";
@@ -58,6 +58,7 @@ const StyledButton = styled.button`
     if ($variant === "action") return "var(--color-text)";
     if ($variant === "icon") return "var(--color-accent)";
     if ($variant === "testing") return "var(--color-accent)";
+    if ($variant === "delete") return "var(--color-text)";
     return "var(--color-button-text)";
   }};
   border: ${({ $variant }) =>

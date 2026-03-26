@@ -6,6 +6,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Button from "@/components/ui/Button";
+import PageHeader from "@/components/ui/PageHeader";
 
 export default function AddIncident({ user }) {
   const { mutate, data: incidents } = useSWR("/api/incidents");
@@ -29,10 +30,10 @@ export default function AddIncident({ user }) {
   }
   return (
     <AddIncidentContainer>
+      <PageHeader>Add a note</PageHeader>
       <Button variant="back" onClick={() => router.push("/")}>
         ← Back
       </Button>
-      <PageTitle>Add a note</PageTitle>
       <IncidentForm
         submitLabel="Save"
         onSubmit={handleAddIncident}
@@ -65,11 +66,4 @@ const AddIncidentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-`;
-
-const PageTitle = styled.h1`
-  font-family: var(--font-family);
-  font-size: 1.2rem;
-  color: var(--color-text);
-  text-align: center;
 `;

@@ -80,6 +80,7 @@ export default function IncidentForm({
             required
             type="time"
             step="60"
+            pattern="[0-9]{2}:[0-9]{2}"
             defaultValue={initialData.time ?? ""}
           />
         </Field>
