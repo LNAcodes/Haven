@@ -73,7 +73,7 @@ const LPContainer = styled.div`
   justify-content: center;
   min-height: 100dvh;
   gap: 16px;
-  padding: 24px;
+  padding: 24px 24px 112px 24px;
 `;
 
 const Title = styled.h1`

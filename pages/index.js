@@ -40,7 +40,7 @@ const WelcomeContainer = styled.div`
   justify-content: center;
   min-height: 100dvh;
   gap: 24px;
-  padding: 24px;
+  padding: 24px 24px 30vh 24px;
   text-align: center;
 `;
 
