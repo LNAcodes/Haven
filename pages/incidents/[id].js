@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Message from "@/components/ui/Message";
 import Button from "@/components/ui/Button";
+import PageHeader from "@/components/ui/PageHeader";
 
 export default function IncidentDetailPage({ user }) {
   const router = useRouter();
@@ -60,6 +61,7 @@ export default function IncidentDetailPage({ user }) {
 
   return (
     <DetailWrapper>
+      <PageHeader>{date}</PageHeader>
       <Button variant="back" onClick={() => router.push("/incidents")}>
         ← Back
       </Button>

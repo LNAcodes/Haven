@@ -3,11 +3,12 @@
 import IncidentList from "@/components/IncidentList/IncidentList";
 import styled from "styled-components";
 import { getSession } from "next-auth/react";
+import PageHeader from "@/components/ui/PageHeader";
 
 export default function IncidentsPage({ user }) {
   return (
     <IncidentsContainer>
-      <IncidentListPageTitle>Overview</IncidentListPageTitle>
+      <PageHeader>Overview</PageHeader>
       <IncidentList />
     </IncidentsContainer>
   );
@@ -29,13 +30,6 @@ export async function getServerSideProps(context) {
     props: { user: session.user },
   };
 }
-
-const IncidentListPageTitle = styled.h1`
-  font-family: var(--font-family);
-  font-size: 1.2rem;
-  color: var(--color-text);
-  text-align: center;
-`;
 
 const IncidentsContainer = styled.div`
   display: flex;
