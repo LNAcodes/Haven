@@ -20,9 +20,10 @@ export default async function handler(request, response) {
           response.status(401).json({ message: "Unauthorized" });
           break;
         }
-        const incidents = await Incident.find({ userId }).sort({
-          date: -1,
-        });
+        const incidents = await Incident.find({
+          userId,
+          hidden: { $ne: true },
+        }).sort({ date: -1 });
         response.status(200).json(incidents);
         break;
       } catch (error) {

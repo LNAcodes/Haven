@@ -22,7 +22,10 @@ export default async function handler(request, response) {
   switch (request.method) {
     case "GET": {
       try {
-        const incident = await Incident.findById(id);
+        const incident = await Incident.findOne({
+          _id: id,
+          hidden: { $ne: true },
+        });
 
         if (!incident) {
           response.status(404).json({ message: "Incident not found" });
@@ -45,7 +48,10 @@ export default async function handler(request, response) {
     case "PATCH":
     case "PUT": {
       try {
-        const incident = await Incident.findById(id);
+        const incident = await Incident.findOne({
+          _id: id,
+          hidden: { $ne: true },
+        });
 
         if (!incident) {
           response.status(404).json({ message: "Incident not found" });
@@ -110,7 +116,10 @@ export default async function handler(request, response) {
 
     case "DELETE": {
       try {
-        const incident = await Incident.findById(id);
+        const incident = await Incident.findOne({
+          _id: id,
+          hidden: { $ne: true },
+        });
 
         if (!incident) {
           response.status(404).json({ message: "Incident not found" });
