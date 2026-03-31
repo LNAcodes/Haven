@@ -4,9 +4,10 @@ import useSWR from "swr";
 import styled from "styled-components";
 import Link from "next/link";
 import IncidentCard from "@/components/IncidentCard/IncidentCard";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 
 export default function IncidentList() {
-  const { data: incidents, isLoading, error } = useSWR("/api/incidents");
+  const { data: incidents, isLoading, error } = useSWR(API_ENDPOINTS.INCIDENTS);
 
   if (isLoading || !incidents)
     return <LoadingMessage>Loading incidents...</LoadingMessage>;

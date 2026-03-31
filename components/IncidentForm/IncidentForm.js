@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Message from "@/components/ui/Message";
 import Button from "@/components/ui/Button";
+import { getSeverityColor } from "@/lib/utils/severity";
 
 export default function IncidentForm({
   initialData = {},
@@ -358,12 +359,7 @@ const LegendDot = styled.span`
   border-radius: 50%;
   display: inline-block;
   flex-shrink: 0;
-  background-color: ${({ $severity }) => {
-    if ($severity === "low") return "var(--color-severity-low)";
-    if ($severity === "medium") return "var(--color-severity-medium)";
-    if ($severity === "high") return "var(--color-severity-high)";
-    if ($severity === "critical") return "var(--color-severity-critical)";
-  }};
+  background-color: ${({ $severity }) => getSeverityColor($severity)};
 `;
 
 const LegendText = styled.span`

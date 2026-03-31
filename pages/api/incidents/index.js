@@ -1,28 +1,16 @@
-// pages\api\incidents\index.js
+// pages/api/incidents/index.js
 
-import dbConnect from "@/db/connect";
 import Incident from "@/models/Incident";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]";
-import { getToken } from "next-auth/jwt";
+import { withAuth } from "@/lib/api/middleware";
+import { parseIncidentFields } from "@/lib/api/incidentParser";
 
-export default async function handler(request, response) {
-  await dbConnect();
-
-  const session = await getServerSession(request, response, authOptions);
-  const token = await getToken({ req: request });
-  const userId = token?.sub;
+export default withAuth(async function handler(request, response) {
+  const { userId } = request;
 
   switch (request.method) {
     case "GET": {
       try {
-        if (!session) {
-          response.status(401).json({ message: "Unauthorized" });
-          break;
-        }
-        const incidents = await Incident.find({ userId }).sort({
-          date: -1,
-        });
+        const incidents = await Incident.find({ userId }).sort({ date: -1 });
         response.status(200).json(incidents);
         break;
       } catch (error) {
@@ -32,44 +20,14 @@ export default async function handler(request, response) {
     }
     case "POST": {
       try {
-        if (!session) {
-          return response.status(401).json({ message: "Unauthorized" });
-        }
-        const {
-          involvedPersons,
-          witnesses: witnessesInput,
-          date,
-          time,
-          location,
-          category,
-          severity,
-          description,
-          impact,
-          reportedTo,
-          followUp,
-        } = request.body;
-
-        const involvedPersonsArray = involvedPersons
-          .split(",")
-          .map((person) => person.trim());
-
-        const witnessesArray = witnessesInput
-          ? witnessesInput.split(",").map((witness) => witness.trim())
-          : [];
+        const { involvedPersons, witnesses, ...fields } =
+          parseIncidentFields(request.body);
 
         const incident = await Incident.create({
           userId,
-          involvedPersons: involvedPersonsArray,
-          witnesses: witnessesArray,
-          date,
-          time,
-          location,
-          category,
-          severity,
-          description,
-          impact,
-          reportedTo,
-          followUp,
+          involvedPersons,
+          witnesses,
+          ...fields,
         });
 
         response.status(201).json(incident);
@@ -87,4 +45,4 @@ export default async function handler(request, response) {
       response.status(405).json({ message: "Method not allowed" });
       break;
   }
-}
+});

@@ -2,20 +2,20 @@
 
 import IncidentForm from "@/components/IncidentForm/IncidentForm";
 import useSWR from "swr";
-import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Button from "@/components/ui/Button";
 import PageHeader from "@/components/ui/PageHeader";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 
 export default function AddIncident({ user }) {
-  const { mutate, data: incidents } = useSWR("/api/incidents");
+  const { mutate, data: incidents } = useSWR(API_ENDPOINTS.INCIDENTS);
   const router = useRouter();
 
   async function handleAddIncident(incidentData) {
     const newIncident = { ...incidentData, _id: crypto.randomUUID() };
     mutate([newIncident, ...(incidents || [])], false);
-    const result = await fetch("/api/incidents", {
+    const result = await fetch(API_ENDPOINTS.INCIDENTS, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(incidentData),
@@ -45,22 +45,7 @@ export default function AddIncident({ user }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { user: session.user },
-  };
-}
+export { requireAuth as getServerSideProps } from "@/lib/auth/requireAuth";
 
 const AddIncidentContainer = styled.div`
   display: flex;

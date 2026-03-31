@@ -1,23 +1,12 @@
 // pages/api/incidents/[id].js
 
-import dbConnect from "@/db/connect";
 import Incident from "@/models/Incident";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { getToken } from "next-auth/jwt";
+import { withAuth } from "@/lib/api/middleware";
+import { parseIncidentFields } from "@/lib/api/incidentParser";
 
-export default async function handler(request, response) {
-  await dbConnect();
-
+export default withAuth(async function handler(request, response) {
   const { id } = request.query;
-  const session = await getServerSession(request, response, authOptions);
-  const token = await getToken({ req: request });
-  const userId = token?.sub;
-
-  if (!session) {
-    response.status(401).json({ message: "Unauthorized" });
-    return;
-  }
+  const { userId } = request;
 
   switch (request.method) {
     case "GET": {
@@ -56,43 +45,13 @@ export default async function handler(request, response) {
           response.status(403).json({ message: "Forbidden" });
           break;
         }
-        const {
-          involvedPersons,
-          witnesses: witnessesInput,
-          date,
-          time,
-          location,
-          category,
-          severity,
-          description,
-          impact,
-          reportedTo,
-          followUp,
-        } = request.body;
 
-        const involvedPersonsArray = involvedPersons
-          .split(",")
-          .map((person) => person.trim());
-
-        const witnessesArray = witnessesInput
-          ? witnessesInput.split(",").map((witness) => witness.trim())
-          : [];
+        const { involvedPersons, witnesses, ...fields } =
+          parseIncidentFields(request.body);
 
         const updated = await Incident.findByIdAndUpdate(
           id,
-          {
-            involvedPersons: involvedPersonsArray,
-            witnesses: witnessesArray,
-            date,
-            time,
-            location,
-            category,
-            severity,
-            description,
-            impact,
-            reportedTo,
-            followUp,
-          },
+          { involvedPersons, witnesses, ...fields },
           { new: true, runValidators: true }
         );
 
@@ -135,4 +94,4 @@ export default async function handler(request, response) {
       response.status(405).json({ message: "Method not allowed" });
       break;
   }
-}
+});
