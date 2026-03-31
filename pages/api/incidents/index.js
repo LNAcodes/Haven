@@ -10,7 +10,14 @@ export default withAuth(async function handler(request, response) {
   switch (request.method) {
     case "GET": {
       try {
-        const incidents = await Incident.find({ userId }).sort({ date: -1 });
+        if (!session) {
+          response.status(401).json({ message: "Unauthorized" });
+          break;
+        }
+        const incidents = await Incident.find({
+          userId,
+          hidden: { $ne: true },
+        }).sort({ date: -1 });
         response.status(200).json(incidents);
         break;
       } catch (error) {
@@ -20,8 +27,9 @@ export default withAuth(async function handler(request, response) {
     }
     case "POST": {
       try {
-        const { involvedPersons, witnesses, ...fields } =
-          parseIncidentFields(request.body);
+        const { involvedPersons, witnesses, ...fields } = parseIncidentFields(
+          request.body
+        );
 
         const incident = await Incident.create({
           userId,

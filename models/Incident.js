@@ -60,6 +60,7 @@ const incidentSchema = new Schema(
       default: "complete",
     },
     userId: { type: String, required: true },
+    hidden: { type: Boolean, default: false },
   },
   {
     timestamps: true,
