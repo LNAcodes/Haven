@@ -1,7 +1,6 @@
 // pages/info/index.js
 
 import styled from "styled-components";
-import { getSession } from "next-auth/react";
 import Link from "next/link";
 import {
   faShield,
@@ -147,22 +146,7 @@ export default function InfoPage({ user }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { user: session.user },
-  };
-}
+export { requireAuth as getServerSideProps } from "@/lib/auth/requireAuth";
 
 const InfoContainer = styled.div`
   font-family: var(--font-family);

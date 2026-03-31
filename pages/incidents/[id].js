@@ -1,7 +1,6 @@
 // pages/incidents/[id].js
 
 import useSWR from "swr";
-import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState } from "react";
@@ -12,11 +11,14 @@ import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Message from "@/components/ui/Message";
 import Button from "@/components/ui/Button";
 import PageHeader from "@/components/ui/PageHeader";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
+import { formatDate } from "@/lib/utils/dateFormatter";
+import { getSeverityColor } from "@/lib/utils/severity";
 
 export default function IncidentDetailPage({ user }) {
   const router = useRouter();
   const { id } = router.query;
-  const incidentUrl = id ? `/api/incidents/${id}` : null;
+  const incidentUrl = id ? API_ENDPOINTS.incidentById(id) : null;
   const { data: incident, error, isLoading } = useSWR(incidentUrl);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -43,7 +45,7 @@ export default function IncidentDetailPage({ user }) {
 
   async function handleDelete() {
     setIsDeleting(true);
-    const result = await fetch(`/api/incidents/${id}`, {
+    const result = await fetch(API_ENDPOINTS.incidentById(id), {
       method: "DELETE",
     });
 
@@ -57,7 +59,7 @@ export default function IncidentDetailPage({ user }) {
     setTimeout(() => router.push("/incidents"), 2000);
   }
 
-  const date = new Date(incident.date).toLocaleDateString("en-GB");
+  const date = formatDate(incident.date);
 
   return (
     <DetailWrapper>
@@ -152,15 +154,15 @@ export default function IncidentDetailPage({ user }) {
           <FieldLabel>Created At</FieldLabel>
           <FieldValue>
             {incident.createdAt
-              ? new Date(incident.createdAt).toLocaleDateString("en-GB")
-              : "NotAvailable"}
+              ? formatDate(incident.createdAt)
+              : "Not available"}
           </FieldValue>
         </FieldGroup>
         <FieldGroup>
           <FieldLabel>Updated At</FieldLabel>
           <FieldValue>
             {incident.updatedAt
-              ? new Date(incident.updatedAt).toLocaleDateString("en-GB")
+              ? formatDate(incident.updatedAt)
               : "Not available"}
           </FieldValue>
         </FieldGroup>
@@ -169,22 +171,7 @@ export default function IncidentDetailPage({ user }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { user: session.user },
-  };
-}
+export { requireAuth as getServerSideProps } from "@/lib/auth/requireAuth";
 
 const DetailPageContainer = styled.main`
   background-color: white;
@@ -193,14 +180,7 @@ const DetailPageContainer = styled.main`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border-left: 8px solid
-    ${({ $severity }) => {
-      if ($severity === "low") return "var(--color-severity-low)";
-      if ($severity === "medium") return "var(--color-severity-medium)";
-      if ($severity === "high") return "var(--color-severity-high)";
-      if ($severity === "critical") return "var(--color-severity-critical)";
-      return "var(--color-primary)";
-    }};
+  border-left: 8px solid ${({ $severity }) => getSeverityColor($severity)};
 `;
 
 const FieldGroup = styled.div`
