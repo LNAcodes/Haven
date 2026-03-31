@@ -1,6 +1,5 @@
 // pages/index.js
 import styled from "styled-components";
-import { getSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function WelcomePage({ user }) {
@@ -16,22 +15,7 @@ export default function WelcomePage({ user }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { user: session.user },
-  };
-}
+export { requireAuth as getServerSideProps } from "@/lib/auth/requireAuth";
 
 const WelcomeContainer = styled.div`
   display: flex;

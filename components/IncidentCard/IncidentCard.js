@@ -2,9 +2,12 @@
 
 import styled from "styled-components";
 import Link from "next/link";
+import { CATEGORY_ABBREVIATIONS } from "@/lib/constants/incident";
+import { formatDate } from "@/lib/utils/dateFormatter";
+import { getSeverityColor } from "@/lib/utils/severity";
 
 export default function IncidentCard({ incident }) {
-  const date = new Date(incident.date).toLocaleDateString("en-GB");
+  const date = formatDate(incident.date);
 
   return (
     <CardLink
@@ -14,7 +17,7 @@ export default function IncidentCard({ incident }) {
       <Card $severity={incident.severity}>
         <DateText>{date}</DateText>
         <CategoryText>
-          {categoryAbbr[incident.category] || incident.category}
+          {CATEGORY_ABBREVIATIONS[incident.category] || incident.category}
         </CategoryText>
       </Card>
     </CardLink>
@@ -33,14 +36,7 @@ const Card = styled.article`
   display: flex;
   gap: 8px;
   align-items: center;
-  border-left: 8px solid
-    ${({ $severity }) => {
-      if ($severity === "low") return "var(--color-severity-low)";
-      if ($severity === "medium") return "var(--color-severity-medium)";
-      if ($severity === "high") return "var(--color-severity-high)";
-      if ($severity === "critical") return "var(--color-severity-critical)";
-      return "var(--color-primary)";
-    }};
+  border-left: 8px solid ${({ $severity }) => getSeverityColor($severity)};
 `;
 
 const DateText = styled.span`
@@ -57,10 +53,3 @@ const CategoryText = styled.span`
   text-transform: capitalize;
 `;
 
-const categoryAbbr = {
-  verbal: "V",
-  physical: "Ph",
-  digital: "Di",
-  discrimination: "Dc",
-  other: "O",
-};

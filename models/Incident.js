@@ -1,6 +1,10 @@
 // models/Incident.js
 
 import mongoose from "mongoose";
+import {
+  INCIDENT_CATEGORIES,
+  SEVERITY_LEVELS,
+} from "@/lib/constants/incident";
 
 const { Schema } = mongoose;
 
@@ -28,12 +32,12 @@ const incidentSchema = new Schema(
     },
     category: {
       type: String,
-      enum: ["verbal", "physical", "digital", "discrimination", "other"],
+      enum: INCIDENT_CATEGORIES,
       required: true,
     },
     severity: {
       type: String,
-      enum: ["low", "medium", "high", "critical"],
+      enum: SEVERITY_LEVELS,
       required: true,
     },
     description: {

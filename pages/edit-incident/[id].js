@@ -4,15 +4,15 @@ import IncidentForm from "@/components/IncidentForm/IncidentForm";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { getSession } from "next-auth/react";
 import Button from "@/components/ui/Button";
 import Message from "@/components/ui/Message";
 import PageHeader from "@/components/ui/PageHeader";
+import { API_ENDPOINTS } from "@/lib/api/endpoints";
 
 export default function EditIncidentPage({ user }) {
   const router = useRouter();
   const { id } = router.query;
-  const incidentUrl = id ? `/api/incidents/${id}` : null;
+  const incidentUrl = id ? API_ENDPOINTS.incidentById(id) : null;
   const { data: incident, isLoading, error } = useSWR(incidentUrl);
 
   if (isLoading || !id || !incident) {
@@ -38,7 +38,7 @@ export default function EditIncidentPage({ user }) {
   };
 
   async function handleEditIncident(incidentData) {
-    const result = await fetch(`/api/incidents/${id}`, {
+    const result = await fetch(API_ENDPOINTS.incidentById(id), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(incidentData),
@@ -69,22 +69,7 @@ export default function EditIncidentPage({ user }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { user: session.user },
-  };
-}
+export { requireAuth as getServerSideProps } from "@/lib/auth/requireAuth";
 
 const PageContainer = styled.div`
   display: flex;
