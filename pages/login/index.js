@@ -21,73 +21,106 @@ export default function LoginPage() {
   }
 
   return (
-    <LPContainer>
-      <Title>Haven</Title>
-      <DescreetMessage>A place just for you.</DescreetMessage>
-      <ButtonContainer>
-        <Button variant="action" fullWidth onClick={() => signIn("github")}>
-          <FontAwesomeIcon icon={faGithub} />
-          Login with Github
-        </Button>
-        <Button variant="testing" fullWidth onClick={() => setShowForm(true)}>
-          Login for Testing
-        </Button>
-
-        {showForm ? (
-          <CredentialsForm
-            onSubmit={(event) => {
-              event.preventDefault();
-              signIn("credentials", { username, password });
-            }}
+    <LoginContainer>
+      <TopSection>
+        <AppLabel>Haven</AppLabel>
+        <Tagline>A place just for you.</Tagline>
+      </TopSection>
+      <BottomSection>
+        <ButtonContainer>
+          <Button variant="action" fullWidth onClick={() => signIn("github")}>
+            <FontAwesomeIcon icon={faGithub} />
+            Login with Github
+          </Button>
+          <Button
+            variant="testing"
+            fullWidth
+            onClick={() => setShowForm(true)}
           >
-            <Input
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-              placeholder="username"
-            />
-            <Input
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="password"
-            />
-            <Button
-              variant="action"
-              type="submit"
-              fullWidth
-              onClick={() => signIn("credentials", { username, password })}
+            Login for Testing
+          </Button>
+
+          {showForm ? (
+            <CredentialsForm
+              onSubmit={(event) => {
+                event.preventDefault();
+                signIn("credentials", { username, password });
+              }}
             >
-              Submit
-            </Button>
-          </CredentialsForm>
-        ) : null}
-      </ButtonContainer>
-    </LPContainer>
+              <Input
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+                placeholder="username"
+              />
+              <Input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="password"
+              />
+              <Button
+                variant="action"
+                type="submit"
+                fullWidth
+                onClick={() => signIn("credentials", { username, password })}
+              >
+                Submit
+              </Button>
+            </CredentialsForm>
+          ) : null}
+        </ButtonContainer>
+      </BottomSection>
+    </LoginContainer>
   );
 }
 
-const LPContainer = styled.div`
+const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100dvh;
-  gap: 16px;
-  padding: 24px 24px 112px 24px;
+  min-height: calc(100dvh - 24px);
+  margin: -24px -24px -88px -24px;
 `;
 
-const Title = styled.h1`
+const TopSection = styled.div`
+  background-color: var(--color-header);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 48px 32px 52px 32px;
+`;
+
+const AppLabel = styled.span`
+  display: block;
   font-family: var(--font-family);
-  font-size: 2rem;
+  font-size: 0.7rem;
   font-weight: var(--font-weight-semibold);
-  color: var(--color-accent);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 20px;
 `;
 
-const DescreetMessage = styled.p`
+const Tagline = styled.p`
   font-family: var(--font-family);
-  font-size: 1rem;
-  color: var(--color-text);
-  text-align: center;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 12px;
+  line-height: 1.6;
+`;
+
+const BottomSection = styled.div`
+  background-color: var(--color-background);
+  padding: 40px 32px 48px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;
 
 const Input = styled.input`
@@ -95,12 +128,11 @@ const Input = styled.input`
   font-size: 1rem;
   padding: 8px 12px;
   min-height: 48px;
-  border: 1px solid var(--color-primary);
+  border: 1px solid rgba(45, 42, 74, 0.2);
   border-radius: 4px;
   color: var(--color-text);
   background-color: var(--color-background);
   width: 100%;
-  max-width: 300px;
   box-sizing: border-box;
 `;
 
@@ -109,14 +141,5 @@ const CredentialsForm = styled.form`
   flex-direction: column;
   gap: 12px;
   width: 100%;
-  max-width: 300px;
-  align-items: center;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  max-width: 300px;
+  align-items: stretch;
 `;

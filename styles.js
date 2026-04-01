@@ -10,10 +10,10 @@ export default createGlobalStyle`
     --color-text: #2D3748;
     --color-button-text: #ffffff;
     --color-header: #2D2A4A;
-    --color-success: #2d6a4f;
-    --color-success-bg: #d8f3dc;
-    --color-error: #92400e;
-    --color-error-bg: #fef3c7;
+    --color-success: #7D4E8C;
+    --color-success-bg: rgba(125, 78, 140, 0.08);
+    --color-error: #C0385A;
+    --color-error-bg: #FEF0F2;
     --color-severity-low: #c5cce8;
     --color-severity-medium: #8d97c9;
     --color-severity-high: #5b6bb5;

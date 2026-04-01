@@ -88,7 +88,7 @@ const PrimaryLink = styled(Link)`
   font-weight: var(--font-weight-medium);
   min-height: 48px;
   padding: 0 20px;
-  background-color: var(--color-header);
+  background-color: var(--color-accent);
   color: #ffffff;
   border-radius: 6px;
   text-decoration: none;
