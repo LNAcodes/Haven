@@ -20,8 +20,10 @@ export default function InfoPage({ user }) {
       </InfoHeader>
 
       <YouAreNotAloneSection>
-        <SectionTitle>We are here for you.</SectionTitle>
-        <EmergencyInfoBox>
+        <SectionTitle style={{ color: "#312e81", fontSize: "1.1rem" }}>
+          We are here for you.
+        </SectionTitle>
+        <EmergencyInfoBox style={{ color: "#3730a3", marginTop: "8px" }}>
           If something happened to you — whether online or in person — you
           deserve to be heard and supported. Reach out.
         </EmergencyInfoBox>
@@ -29,9 +31,9 @@ export default function InfoPage({ user }) {
       </YouAreNotAloneSection>
 
       <CardsContainer>
-        <InfoSection $borderColor="var(--color-error)">
+        <InfoSection $borderColor="#D97706">
           <CardHeader>
-            <IconBox $bgColor="var(--color-error-bg)">
+            <IconBox $bgColor="#FFFBEB" $iconColor="#D97706">
               <FontAwesomeIcon icon={faShield} />
             </IconBox>
             <SectionTitle>If you are in immediate danger</SectionTitle>
@@ -51,9 +53,9 @@ export default function InfoPage({ user }) {
           </ResourceList>
         </InfoSection>
 
-        <InfoSection $borderColor="var(--color-accent)">
+        <InfoSection $borderColor="#7D4E8C">
           <CardHeader>
-            <IconBox $bgColor="var(--color-severity-low)">
+            <IconBox $bgColor="#FAF5FF" $iconColor="#7D4E8C">
               <FontAwesomeIcon icon={faHandHoldingMedical} />
             </IconBox>
             <SectionTitle>Crisis Hotlines</SectionTitle>
@@ -83,9 +85,9 @@ export default function InfoPage({ user }) {
           </ResourceList>
         </InfoSection>
 
-        <InfoSection $borderColor="var(--color-success)">
+        <InfoSection $borderColor="#3A7CA5">
           <CardHeader>
-            <IconBox $bgColor="var(--color-success-bg)">
+            <IconBox $bgColor="#EAF4FB" $iconColor="#3A7CA5">
               <FontAwesomeIcon icon={faLaptop} />
             </IconBox>
             <SectionTitle>Online Help</SectionTitle>
@@ -135,8 +137,10 @@ export default function InfoPage({ user }) {
         </InfoSection>
       </CardsContainer>
       <YouAreNotAloneSectionBottom>
-        <SectionTitle>You are not alone.</SectionTitle>
-        <EmergencyInfoBox>
+        <SectionTitle style={{ color: "#312e81", fontSize: "1.1rem" }}>
+          You are not alone.
+        </SectionTitle>
+        <EmergencyInfoBox style={{ color: "#3730a3", marginTop: "8px" }}>
           What happened to you is not okay, and it is not your fault. You
           deserve support. Talking to a trusted adult — a teacher, family
           member, or counselor — can make a real difference.
@@ -165,20 +169,21 @@ const InfoPageTitle = styled.h1`
 
 const InfoSection = styled.div`
   background-color: white;
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border-left: 4px solid ${({ $borderColor }) => $borderColor};
+  border-top: 3px solid ${({ $borderColor }) => $borderColor};
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.05);
 `;
 
 const SectionTitle = styled.h2`
   font-family: var(--font-family);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
-  align-self: center;
+  line-height: 1.3;
 `;
 
 const ResourceList = styled.ul`
@@ -187,13 +192,18 @@ const ResourceList = styled.ul`
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
 `;
 
 const ResourceItem = styled.li`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
+  padding: 12px 0;
+
+  & + & {
+    border-top: 1px solid #f0f0f0;
+  }
 `;
 
 const HotlineLink = styled(Link)`
@@ -206,22 +216,25 @@ const HotlineLink = styled(Link)`
 
 const EmergencyInfoBox = styled.p`
   font-family: var(--font-family);
-  font-size: 0.9rem;
-  color: var(--color-text);
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
 `;
 
 const YouAreNotAloneSection = styled.div`
-  background-color: var(--color-severity-low);
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
   padding: 32px 24px;
   margin: 0 -24px;
   text-align: left;
+  border-bottom: 1px solid #c7d2fe;
 `;
 
 const YouAreNotAloneSectionBottom = styled.div`
-  background-color: var(--color-severity-low);
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
   padding: 32px 24px;
   margin: 0 -24px;
   text-align: left;
+  border-top: 1px solid #c7d2fe;
 
   @media (min-width: 768px) {
     margin: 0 -24px;
@@ -242,48 +255,60 @@ const ButtonRow = styled.div`
 
 const CallButton = styled(Link)`
   font-family: var(--font-family);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: var(--font-weight-medium);
   min-height: 44px;
-  padding: 0 16px;
+  padding: 0 14px;
   border-radius: 8px;
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
+  transition: filter 0.15s ease;
+
   background-color: ${({ $variant }) => {
-    if ($variant === "critical") return "var(--color-error-bg)";
-    if ($variant === "accent") return "var(--color-severity-low)";
-    if ($variant === "success") return "var(--color-success-bg)";
-    return "var(--color-severity-low)";
+    if ($variant === "critical") return "#FFFBEB";
+    if ($variant === "accent") return "#FAF5FF";
+    if ($variant === "success") return "#EAF4FB";
+    return "#EAF4FB";
   }};
-  color: var(--color-text);
+  color: ${({ $variant }) => {
+    if ($variant === "critical") return "#92400E";
+    if ($variant === "accent") return "#6B21A8";
+    if ($variant === "success") return "#1E5F85";
+    return "#1E5F85";
+  }};
   border: 1px solid
     ${({ $variant }) => {
-      if ($variant === "critical") return "var(--color-error)";
-      if ($variant === "accent") return "var(--color-accent)";
-      if ($variant === "success") return "var(--color-success)";
-      return "var(--color-primary)";
+      if ($variant === "critical") return "#FDE68A";
+      if ($variant === "accent") return "#E9D5FF";
+      if ($variant === "success") return "#A8D5EE";
+      return "#A8D5EE";
     }};
+
+  &:hover {
+    filter: brightness(0.96);
+  }
 `;
 
 const ResourceName = styled.span`
   font-family: var(--font-family);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
 `;
 
-const BelieveYouText = styled.h2`
+const BelieveYouText = styled.p`
   font-family: var(--font-family);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
+  color: #4338ca;
+  margin-top: 4px;
 `;
 
 const InfoHeader = styled.div`
-  background-color: var(--color-severity-critical);
+  background-color: var(--color-header);
   padding: 48px 24px;
   text-align: left;
   margin: -24px -24px 0 -24px;
@@ -292,8 +317,8 @@ const InfoHeader = styled.div`
 const CardsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
-  padding: 24px;
+  gap: 16px;
+  padding: 24px 0;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
@@ -304,17 +329,19 @@ const CardsContainer = styled.div`
 const CardHeader = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px;
+  padding-bottom: 4px;
 `;
 
 const IconBox = styled.div`
   background-color: ${({ $bgColor }) => $bgColor};
-  padding: 12px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  color: var(--color-accent);
+  font-size: 1.1rem;
+  color: ${({ $iconColor }) => $iconColor || "var(--color-accent)"};
   flex-shrink: 0;
 `;

@@ -9,6 +9,7 @@ export default createGlobalStyle`
     --color-accent: #7D4E8C;
     --color-text: #2D3748;
     --color-button-text: #ffffff;
+    --color-header: #2D2A4A;
     --color-success: #2d6a4f;
     --color-success-bg: #d8f3dc;
     --color-error: #92400e;
