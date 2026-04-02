@@ -47,22 +47,26 @@ const StyledButton = styled.button`
   gap: 8px;
   width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "fit-content")};
   background-color: ${({ $variant }) => {
-    if ($variant === "action") return "var(--color-primary)";
-    if ($variant === "back") return "var(--color-accent)";
+    if ($variant === "action") return "var(--color-accent)";
+    if ($variant === "back") return "transparent";
     if ($variant === "delete") return "var(--color-background)";
     if ($variant === "icon") return "transparent";
     if ($variant === "testing") return "transparent";
-    return "var(--color-primary)";
+    return "var(--color-accent)";
   }};
   color: ${({ $variant }) => {
-    if ($variant === "action") return "var(--color-text)";
+    if ($variant === "action") return "var(--color-button-text)";
+    if ($variant === "back") return "var(--color-text)";
     if ($variant === "icon") return "var(--color-accent)";
     if ($variant === "testing") return "var(--color-accent)";
     if ($variant === "delete") return "var(--color-text)";
     return "var(--color-button-text)";
   }};
-  border: ${({ $variant }) =>
-    $variant === "testing" ? "1px solid var(--color-accent)" : "none"};
+  border: ${({ $variant }) => {
+    if ($variant === "back") return "1.5px solid rgba(45, 42, 74, 0.35)";
+    if ($variant === "testing") return "1px solid var(--color-accent)";
+    return "none";
+  }};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
 `;

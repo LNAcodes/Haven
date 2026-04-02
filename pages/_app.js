@@ -29,7 +29,6 @@ function AppContent({ Component, pageProps }) {
   const router = useRouter();
   const { status } = useSession();
   const isLoginPage = router.pathname === "/login";
-  const isWelcomePage = router.pathname === "/";
 
   return (
     <Wrapper>
@@ -46,7 +45,6 @@ function AppContent({ Component, pageProps }) {
           <SettingsLink
             href="/settings"
             aria-label="Settings"
-            $onLight={isWelcomePage}
           >
             <FontAwesomeIcon icon={faCog} />
           </SettingsLink>
@@ -86,8 +84,7 @@ const SettingsLink = styled(Link)`
   top: 16px;
   right: 16px;
   font-size: 1.4rem;
-  color: ${({ $onLight }) =>
-    $onLight ? "var(--color-accent)" : "var(--color-button-text)"};
+  color: var(--color-button-text);
   opacity: 0.5;
   text-decoration: none;
   z-index: 10;

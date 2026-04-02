@@ -11,7 +11,7 @@ export default function PageHeader({ children, variant = "default" }) {
 }
 
 const Header = styled.div`
-  background-color: var(--color-severity-critical);
+  background-color: var(--color-header);
   padding: 48px 24px;
   margin: -24px -24px 0 -24px;
 `;

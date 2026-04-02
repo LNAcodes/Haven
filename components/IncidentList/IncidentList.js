@@ -9,9 +9,9 @@ import { API_ENDPOINTS } from "@/lib/api/endpoints";
 export default function IncidentList() {
   const { data: incidents, isLoading, error } = useSWR(API_ENDPOINTS.INCIDENTS);
 
+  if (error) return <ErrorMessage>Something went wrong</ErrorMessage>;
   if (isLoading || !incidents)
     return <LoadingMessage>Loading incidents...</LoadingMessage>;
-  if (error) return <ErrorMessage>Something went wrong</ErrorMessage>;
   if (incidents.length === 0)
     return (
       <EmptyMessage>
