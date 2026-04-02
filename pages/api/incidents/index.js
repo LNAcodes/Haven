@@ -10,10 +10,6 @@ export default withAuth(async function handler(request, response) {
   switch (request.method) {
     case "GET": {
       try {
-        if (!session) {
-          response.status(401).json({ message: "Unauthorized" });
-          break;
-        }
         const incidents = await Incident.find({
           userId,
           hidden: { $ne: true },

@@ -31,9 +31,9 @@ export default function InfoPage({ user }) {
       </YouAreNotAloneSection>
 
       <CardsContainer>
-        <InfoSection $borderColor="#D97706">
+        <InfoSection $borderColor="#B5747E">
           <CardHeader>
-            <IconBox $bgColor="#FFFBEB" $iconColor="#D97706">
+            <IconBox $bgColor="#FDF2F4" $iconColor="#B5747E">
               <FontAwesomeIcon icon={faShield} />
             </IconBox>
             <SectionTitle>If you are in immediate danger</SectionTitle>
@@ -268,20 +268,20 @@ const CallButton = styled(Link)`
   transition: filter 0.15s ease;
 
   background-color: ${({ $variant }) => {
-    if ($variant === "critical") return "#FFFBEB";
+    if ($variant === "critical") return "#FDF2F4";
     if ($variant === "accent") return "#FAF5FF";
     if ($variant === "success") return "#EAF4FB";
     return "#EAF4FB";
   }};
   color: ${({ $variant }) => {
-    if ($variant === "critical") return "#92400E";
+    if ($variant === "critical") return "#7A2D3A";
     if ($variant === "accent") return "#6B21A8";
     if ($variant === "success") return "#1E5F85";
     return "#1E5F85";
   }};
   border: 1px solid
     ${({ $variant }) => {
-      if ($variant === "critical") return "#FDE68A";
+      if ($variant === "critical") return "#E8B4BB";
       if ($variant === "accent") return "#E9D5FF";
       if ($variant === "success") return "#A8D5EE";
       return "#A8D5EE";

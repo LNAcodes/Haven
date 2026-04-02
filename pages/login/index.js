@@ -24,6 +24,7 @@ export default function LoginPage() {
     <LoginContainer>
       <TopSection>
         <AppLabel>Haven</AppLabel>
+        <Heading>Sign in.</Heading>
         <Tagline>A place just for you.</Tagline>
       </TopSection>
       <BottomSection>
@@ -77,7 +78,7 @@ export default function LoginPage() {
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: calc(100dvh - 24px);
+  min-height: calc(100dvh - 24px - 88px);
   margin: -24px -24px -88px -24px;
 `;
 
@@ -88,6 +89,14 @@ const TopSection = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   padding: 48px 32px 52px 32px;
+`;
+
+const Heading = styled.h1`
+  font-family: var(--font-family);
+  font-size: 2.2rem;
+  font-weight: var(--font-weight-semibold);
+  color: #ffffff;
+  line-height: 1.15;
 `;
 
 const AppLabel = styled.span`
